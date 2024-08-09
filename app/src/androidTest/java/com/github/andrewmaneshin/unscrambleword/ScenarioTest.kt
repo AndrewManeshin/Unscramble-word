@@ -1,14 +1,19 @@
 package com.github.andrewmaneshin.unscrambleword
 
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 
 @RunWith(AndroidJUnit4::class)
 class ScenarioTest {
+
+    @get:Rule
+    val scenarioRule = ActivityScenarioRule(MainActivity::class.java)
 
     private lateinit var gamePage: GamePage
 
@@ -23,6 +28,7 @@ class ScenarioTest {
     @Test
     fun skipTest() {
         gamePage.clickSkip()
+        gamePage = GamePage(scrumbledWord = "chrome")
         gamePage().assertInitialState()
     }
 
@@ -84,6 +90,7 @@ class ScenarioTest {
         gamePage.assertIncorrectState()
 
         gamePage.clickSkip()
+        gamePage = GamePage(scrumbledWord = "chrome")
         gamePage().assertInitialState()
     }
 
@@ -103,5 +110,9 @@ class ScenarioTest {
         gamePage.input("android")
         gamePage.clickCheck()
         gamePage.assertCorrectState()
+
+        gamePage.clickNext()
+        gamePage = GamePage(scrumbledWord = "chrome")
+        gamePage.initialState()
     }
 }

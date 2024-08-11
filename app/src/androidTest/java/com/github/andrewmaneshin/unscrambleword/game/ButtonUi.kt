@@ -2,6 +2,7 @@ package com.github.andrewmaneshin.unscrambleword.game
 
 import android.view.View
 import android.widget.Button
+import androidx.annotation.StringRes
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -15,7 +16,7 @@ import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 
 class ButtonUi(
-    text: String,
+    @StringRes text: Int,
     id: Int,
     containerIdMatcher: Matcher<View>,
     containerClassTypeMatcher: Matcher<View>

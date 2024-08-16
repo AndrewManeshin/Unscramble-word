@@ -6,7 +6,6 @@ import org.junit.Test
 
 class GameViewModelTest {
 
-
     private lateinit var viewModel: GameViewModel
 
     @Before
@@ -102,4 +101,19 @@ class GameViewModelTest {
 
 private class FakeGameRepository : GameRepository {
 
+    private var index = 0
+
+    private val originalList = listOf("android", "develop")
+    private val scrambledList = originalList.map { it.reversed() }
+
+    override fun scrambledWord(): String = scrambledList[index]
+
+    override fun originalWord(): String = originalList[index]
+
+    override fun next() {
+        if (index == originalList.size) index = 0
+        ++index
+    }
+
+    override fun check(text: String): Boolean = text == originalList[index]
 }

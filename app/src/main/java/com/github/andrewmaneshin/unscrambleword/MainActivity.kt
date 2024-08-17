@@ -22,7 +22,19 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val viewModel = GameViewModel()
+        val viewModel = GameViewModel(object : GameRepository {
+            override fun scrambledWord(): String {
+                TODO("Not yet implemented")
+            }
+
+            override fun originalWord(): String {
+                TODO("Not yet implemented")
+            }
+
+            override fun next() {
+                TODO("Not yet implemented")
+            }
+        })
 
         binding.nextButton.setOnClickListener {
             val uiState: GameUiState = viewModel.next()
@@ -41,10 +53,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.inputEditText.addTextChangedListener { text ->
             val uiState: GameUiState = viewModel.handleUserInput(text = text.toString())
-            uiState.ipdate()
+            uiState.update(binding = binding)
         }
 
         val uiState: GameUiState = viewModel.init()
-        uiState.update()
+        uiState.update(binding = binding)
     }
 }

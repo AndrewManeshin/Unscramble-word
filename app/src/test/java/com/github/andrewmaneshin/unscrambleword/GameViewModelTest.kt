@@ -1,6 +1,6 @@
 package com.github.andrewmaneshin.unscrambleword
 
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
@@ -10,7 +10,7 @@ class GameViewModelTest {
 
     @Before
     fun setup() {
-        viewModel = GameViewModel(repository = FakeGameRepository)
+        viewModel = GameViewModel(repository = FakeGameRepository())
     }
 
     /**
@@ -19,9 +19,7 @@ class GameViewModelTest {
     @Test
     fun skipTest() {
         val actual: GameUiState = viewModel.skip()
-        val expected: GameUiState = GameUiState.Initial(
-            scrambledWord = "android"
-        )
+        val expected: GameUiState = GameUiState.Initial(scrambledWord = "poleved")
         assertEquals(expected, actual)
     }
 
@@ -30,16 +28,12 @@ class GameViewModelTest {
      */
     @Test
     fun InsufficientInputTest() {
-        val actual: GameUiState = viewModel.handleUserInput(text = "androi")
-        val expected: GameUiState = GameUiState.Insufficient(
-            scrambledWord = "android"
-        )
+        var actual: GameUiState = viewModel.handleUserInput(text = "androi")
+        var expected: GameUiState = GameUiState.Insufficient(scrambledWord = "diordna")
         assertEquals(expected, actual)
 
-        val actual: GameUiState = viewModel.handleUserInput(text = "androidd")
-        val expected: GameUiState = GameUiState.Insufficient(
-            scrambledWord = "android"
-        )
+        actual = viewModel.handleUserInput(text = "androidd")
+        expected = GameUiState.Insufficient(scrambledWord = "diordna")
         assertEquals(expected, actual)
     }
 
@@ -49,9 +43,7 @@ class GameViewModelTest {
     @Test
     fun SufficientInputTest() {
         val actual: GameUiState = viewModel.handleUserInput(text = "androit")
-        val expected: GameUiState = GameUiState.Sufficient(
-            scrambledWord = "android"
-        )
+        val expected: GameUiState = GameUiState.Sufficient(scrambledWord = "diordna")
         assertEquals(expected, actual)
     }
 
@@ -61,9 +53,7 @@ class GameViewModelTest {
     @Test
     fun IncorrectTest() {
         val actual: GameUiState = viewModel.check(text = "androit")
-        val expected: GameUiState = GameUiState.Incorrect(
-            scrambledWord = "android"
-        )
+        val expected: GameUiState = GameUiState.Incorrect(scrambledWord = "diordna")
         assertEquals(expected, actual)
     }
 
@@ -72,12 +62,12 @@ class GameViewModelTest {
      */
     @Test
     fun SkipAfterIncorrectTest() {
-        val actual: GameUiState = viewModel.check(text = "androit")
-        val expected: GameUiState = GameUiState.Incorrect(scrambledWord = "android")
+        var actual: GameUiState = viewModel.check(text = "androit")
+        var expected: GameUiState = GameUiState.Incorrect(scrambledWord = "diordna")
         assertEquals(expected, actual)
 
-        val actual: GameUiState = viewModel.skip
-        val expected: GameUiState = GameUiState.Initial(scrambledWord = "develop")
+        actual = viewModel.skip()
+        expected = GameUiState.Initial(scrambledWord = "poleved")
         assertEquals(expected, actual)
     }
 
@@ -86,15 +76,16 @@ class GameViewModelTest {
      */
     @Test
     fun CorrectAfterIncorrectTest() {
-        val actual: GameUiState = viewModel.check(text = "androit")
-        val expected: GameUiState = GameUiState.Incorrect(scrambledWord = "android")
+        var actual: GameUiState = viewModel.check(text = "androit")
+        var expected: GameUiState = GameUiState.Incorrect(scrambledWord = "diordna")
         assertEquals(expected, actual)
 
-        val actual: GameUiState = viewModel.handleUserInput(text = "androit")
-        val expected: GameUiState = GameUiState.Sufficient(scrambledWord = "android")
+        actual = viewModel.handleUserInput(text = "androit")
+        expected = GameUiState.Sufficient(scrambledWord = "diordna")
+        assertEquals(expected, actual)
 
-        val actual: GameUiState = viewModel.check("android")
-        val expected: GameUiState = GameUiState.Correct(scrambledWord = "android")
+        actual = viewModel.check("android")
+        expected = GameUiState.Correct(scrambledWord = "diordna")
         assertEquals(expected, actual)
     }
 }
@@ -111,9 +102,7 @@ private class FakeGameRepository : GameRepository {
     override fun originalWord(): String = originalList[index]
 
     override fun next() {
-        if (index == originalList.size) index = 0
+        if (index == originalList.size - 1) index = 0
         ++index
     }
-
-    override fun check(text: String): Boolean = text == originalList[index]
 }

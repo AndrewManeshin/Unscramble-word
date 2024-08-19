@@ -13,9 +13,9 @@ import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isEnabled
 import androidx.test.espresso.matcher.ViewMatchers.isNotEnabled
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.github.andrewmaneshin.unscrambleword.R
+import com.github.andrewmaneshin.unscrambleword.TextInputLayoutErrorEnabledMatcher
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import org.hamcrest.Matcher
@@ -38,46 +38,61 @@ class InputUI(
     private val inputInteraction: ViewInteraction = onView(
         allOf(
             withId(R.id.inputEditText),
-            withParent(withId(R.id.inputLayout)),
-            withParent(isAssignableFrom(TextInputLayout::class.java)),
             isAssignableFrom(TextInputEditText::class.java)
         )
     )
     private val textInputLayoutErrorEnabledMatcherFalse = TextInputLayoutErrorEnabledMatcher(false)
 
     fun assertInsufficientInputState() {
-        layoutInteraction.check(matches(isEnabled()))
-        inputInteraction.check(matches(textInputLayoutErrorEnabledMatcherFalse))
-    }
-
-    fun assertSufficientInputState() {
-        layoutInteraction.check(matches(isEnabled()))
-        inputInteraction.check(matches(textInputLayoutErrorEnabledMatcherFalse))
-    }
-
-    fun assertInitialState() {
-        layoutInteraction.check(matches(isEnabled()))
-        inputInteraction.check(
+        layoutInteraction.check(
             matches(
                 allOf(
-                    withText(""),
+                    isEnabled(),
                     textInputLayoutErrorEnabledMatcherFalse
                 )
             )
         )
     }
 
+    fun assertSufficientInputState() {
+        layoutInteraction.check(
+            matches(
+                allOf(
+                    isEnabled(),
+                    textInputLayoutErrorEnabledMatcherFalse
+                )
+            )
+        )
+    }
+
+    fun assertInitialState() {
+        layoutInteraction.check(
+            matches(
+                allOf(
+                    isEnabled(),
+                    textInputLayoutErrorEnabledMatcherFalse
+                )
+            )
+        )
+        inputInteraction.check(matches(allOf(withText(""))))
+    }
+
     fun assertIncorrectState() {
-        layoutInteraction.check(matches(isEnabled()))
-        inputInteraction.check(matches(TextInputLayoutErrorEnabledMatcher(true)))
+        layoutInteraction.check(
+            matches(
+                allOf(
+                    isEnabled(),
+                    TextInputLayoutErrorEnabledMatcher(true)
+                )
+            )
+        )
     }
 
     fun assertCorrectState() {
-        layoutInteraction.check(matches(isNotEnabled()))
-        inputInteraction.check(
+        layoutInteraction.check(
             matches(
                 allOf(
-                    withText(""),
+                    isNotEnabled(),
                     textInputLayoutErrorEnabledMatcherFalse
                 )
             )

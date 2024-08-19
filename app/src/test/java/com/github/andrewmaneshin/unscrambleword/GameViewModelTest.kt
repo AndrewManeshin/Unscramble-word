@@ -102,7 +102,6 @@ private class FakeGameRepository : GameRepository {
     override fun originalWord(): String = originalList[index]
 
     override fun next() {
-        if (index == originalList.size - 1) index = 0
-        ++index
+        if (index == originalList.size - 1) index = 0 else ++index
     }
 }

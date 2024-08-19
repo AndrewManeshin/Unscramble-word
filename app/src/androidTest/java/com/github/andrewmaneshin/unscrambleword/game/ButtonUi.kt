@@ -4,7 +4,6 @@ import android.view.View
 import android.widget.Button
 import androidx.annotation.StringRes
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -14,6 +13,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.not
 
 class ButtonUi(
     @StringRes text: Int,
@@ -41,7 +41,7 @@ class ButtonUi(
     }
 
     fun assertNotVisible() {
-        interaction.check(doesNotExist())
+        interaction.check(matches(not(isDisplayed())))
     }
 
     fun assertVisible() {

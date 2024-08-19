@@ -23,7 +23,7 @@ class ScrambleWordUi(
         allOf(
             containerIdMatcher,
             containerClassTypeMatcher,
-            withId(R.id.scrambleWordTextView),
+            withId(R.id.scrambledWordTextView),
             withText(scrambledWord),
             isAssignableFrom(TextView::class.java)
         )

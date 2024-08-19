@@ -3,4 +3,6 @@
     <string name="check">Check</string>
     <string name="skip">Skip</string>
     <string name="next">Next</string>
+    <string name="incorrect_message">incorrect</string>
+    <string name="empty"></string>
 </resources>

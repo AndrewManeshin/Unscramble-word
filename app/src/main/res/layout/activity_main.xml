@@ -4,13 +4,14 @@
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="32dp"
     android:gravity="center_vertical"
     android:orientation="vertical"
+    android:padding="32dp"
     tools:context=".MainActivity">
 
 
     <TextView
+        android:id="@+id/scrambledWordTextView"
         style="@style/MaterialAlertDialog.Material3.Title.Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,12 +22,14 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="32dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputEditText"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Space

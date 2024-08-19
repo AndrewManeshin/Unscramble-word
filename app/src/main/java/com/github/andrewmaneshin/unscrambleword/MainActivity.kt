@@ -11,30 +11,18 @@ import com.github.andrewmaneshin.unscrambleword.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        enableEdgeToEdge()
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        val viewModel = GameViewModel(object : GameRepository {
-            override fun scrambledWord(): String {
-                TODO("Not yet implemented")
-            }
-
-            override fun originalWord(): String {
-                TODO("Not yet implemented")
-            }
-
-            override fun next() {
-                TODO("Not yet implemented")
-            }
-        })
+        val viewModel = GameViewModel(GameRepository.Base(ShuffleStrategy.Base()))
 
         binding.nextButton.setOnClickListener {
             val uiState: GameUiState = viewModel.next()

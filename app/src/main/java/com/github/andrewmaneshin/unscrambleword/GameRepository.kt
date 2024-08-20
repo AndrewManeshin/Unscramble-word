@@ -13,8 +13,9 @@ interface GameRepository {
         private var index = 0
 
         private val originalList = listOf("android", "develop")
+        private val shuffledList = originalList.map { shuffleStrategy.shuffle(it) }
 
-        override fun scrambledWord(): String = shuffleStrategy.shuffle(originalList[index])
+        override fun scrambledWord(): String = shuffledList[index]
 
         override fun originalWord(): String = originalList[index]
 

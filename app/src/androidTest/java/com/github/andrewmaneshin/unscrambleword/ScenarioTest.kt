@@ -8,7 +8,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-
 @RunWith(AndroidJUnit4::class)
 class ScenarioTest {
 
@@ -30,6 +29,9 @@ class ScenarioTest {
         gamePage.clickSkip()
         gamePage = GamePage(scrambledWord = "poleved")
         gamePage.assertInitialState()
+
+        scenarioRule.scenario.recreate()
+        gamePage.assertInitialState()
     }
 
     /**
@@ -39,6 +41,9 @@ class ScenarioTest {
     fun InsufficientInputTest() {
         gamePage.addInput("adnroi")
         gamePage.assertInsufficientInputState()
+
+        scenarioRule.scenario.recreate()
+        gamePage.assertInsufficientInputState()
     }
 
     /**
@@ -47,6 +52,9 @@ class ScenarioTest {
     @Test
     fun SufficientInputTest() {
         gamePage.addInput("androit")
+        gamePage.assertSufficientInputState()
+
+        scenarioRule.scenario.recreate()
         gamePage.assertSufficientInputState()
     }
 
@@ -58,13 +66,25 @@ class ScenarioTest {
         gamePage.addInput("adnroi")
         gamePage.assertInsufficientInputState()
 
+        scenarioRule.scenario.recreate()
+        gamePage.assertInsufficientInputState()
+
         gamePage.addInput("dd")
+        gamePage.assertInsufficientInputState()
+
+        scenarioRule.scenario.recreate()
         gamePage.assertInsufficientInputState()
 
         gamePage.removeInputLastLetter()
         gamePage.assertSufficientInputState()
 
+        scenarioRule.scenario.recreate()
+        gamePage.assertSufficientInputState()
+
         gamePage.removeInputLastLetter()
+        gamePage.assertInsufficientInputState()
+
+        scenarioRule.scenario.recreate()
         gamePage.assertInsufficientInputState()
     }
 
@@ -76,6 +96,9 @@ class ScenarioTest {
         gamePage.addInput("androit")
 
         gamePage.clickCheck()
+        gamePage.assertIncorrectState()
+
+        scenarioRule.scenario.recreate()
         gamePage.assertIncorrectState()
     }
 
@@ -89,8 +112,14 @@ class ScenarioTest {
         gamePage.clickCheck()
         gamePage.assertIncorrectState()
 
+        scenarioRule.scenario.recreate()
+        gamePage.assertIncorrectState()
+
         gamePage.clickSkip()
         gamePage = GamePage(scrambledWord = "poleved")
+        gamePage.assertInitialState()
+
+        scenarioRule.scenario.recreate()
         gamePage.assertInitialState()
     }
 
@@ -104,15 +133,27 @@ class ScenarioTest {
         gamePage.clickCheck()
         gamePage.assertIncorrectState()
 
+        scenarioRule.scenario.recreate()
+        gamePage.assertIncorrectState()
+
         gamePage.removeInputLastLetter()
+        gamePage.assertInsufficientInputState()
+
+        scenarioRule.scenario.recreate()
         gamePage.assertInsufficientInputState()
 
         gamePage.addInput("d")
         gamePage.clickCheck()
         gamePage.assertCorrectState()
 
+        scenarioRule.scenario.recreate()
+        gamePage.assertCorrectState()
+
         gamePage.clickNext()
         gamePage = GamePage(scrambledWord = "poleved")
+        gamePage.assertInitialState()
+
+        scenarioRule.scenario.recreate()
         gamePage.assertInitialState()
     }
 }

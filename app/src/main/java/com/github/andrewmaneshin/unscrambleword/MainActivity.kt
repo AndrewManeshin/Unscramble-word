@@ -1,5 +1,6 @@
 package com.github.andrewmaneshin.unscrambleword
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -9,10 +10,15 @@ import androidx.core.widget.addTextChangedListener
 import com.github.andrewmaneshin.unscrambleword.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var uiState: GameUiState
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var viewModel: GameViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         enableEdgeToEdge()
@@ -22,29 +28,47 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val viewModel = GameViewModel(GameRepository.Base(ShuffleStrategy.Base()))
+        viewModel = (application as UGApp).gameViewModel
 
         binding.nextButton.setOnClickListener {
-            val uiState: GameUiState = viewModel.next()
+            uiState = viewModel.next()
             uiState.update(binding = binding)
         }
 
         binding.skipButton.setOnClickListener {
-            val uiState: GameUiState = viewModel.skip()
+            uiState = viewModel.skip()
             uiState.update(binding = binding)
         }
 
         binding.checkButton.setOnClickListener {
-            val uiState: GameUiState = viewModel.check(text = binding.inputEditText.text.toString())
+            uiState = viewModel.check(text = binding.inputEditText.text.toString())
             uiState.update(binding = binding)
         }
 
         binding.inputEditText.addTextChangedListener { text ->
-            val uiState: GameUiState = viewModel.handleUserInput(text = text.toString())
+            uiState = viewModel.handleUserInput(text = text.toString())
             uiState.update(binding = binding)
         }
 
-        val uiState: GameUiState = viewModel.init()
+        if (savedInstanceState == null) {
+            uiState = viewModel.init()
+            uiState.update(binding = binding)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putSerializable("KEY", uiState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        uiState = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            savedInstanceState.getSerializable("KEY", GameUiState::class.java)!!
+        } else {
+            savedInstanceState.getSerializable("KEY") as GameUiState
+        }
+
         uiState.update(binding = binding)
     }
 }

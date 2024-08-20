@@ -2,8 +2,9 @@ package com.github.andrewmaneshin.unscrambleword
 
 import android.view.View
 import com.github.andrewmaneshin.unscrambleword.databinding.ActivityMainBinding
+import java.io.Serializable
 
-interface GameUiState {
+interface GameUiState : Serializable {
 
     fun update(binding: ActivityMainBinding)
 

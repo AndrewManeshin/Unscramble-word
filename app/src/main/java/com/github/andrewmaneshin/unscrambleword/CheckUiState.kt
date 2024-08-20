@@ -2,8 +2,9 @@ package com.github.andrewmaneshin.unscrambleword
 
 import android.view.View
 import android.widget.Button
+import java.io.Serializable
 
-interface CheckUiState {
+interface CheckUiState : Serializable {
 
     fun update(checkButton: Button)
 

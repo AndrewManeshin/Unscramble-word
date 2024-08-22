@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="32dp"
+    tools:context=".MainActivity">
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/scrambledWordTextView"
+            style="@style/MaterialAlertDialog.Material3.Title.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center"
+            android:paddingVertical="64dp"
+            tools:text="ANIORDD" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingHorizontal="32dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/checkButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="64dp"
+            android:layout_marginVertical="8dp"
+            android:text="@string/check" />
+
+        <Button
+            android:id="@+id/skipButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="64dp"
+            android:layout_marginVertical="8dp"
+            android:text="@string/skip" />
+
+        <Button
+            android:id="@+id/nextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="64dp"
+            android:layout_marginVertical="8dp"
+            android:text="@string/next" />
+
+    </LinearLayout>
+
+</LinearLayout>

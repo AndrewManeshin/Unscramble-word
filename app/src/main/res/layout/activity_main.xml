@@ -9,7 +9,6 @@
     android:padding="32dp"
     tools:context=".MainActivity">
 
-
     <TextView
         android:id="@+id/scrambledWordTextView"
         style="@style/MaterialAlertDialog.Material3.Title.Text"

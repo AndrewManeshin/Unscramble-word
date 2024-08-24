@@ -1,7 +1,9 @@
 package com.github.andrewmaneshin.unscrambleword
 
+import android.content.Context
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import com.github.andrewmaneshin.unscrambleword.game.GamePage
 import org.junit.Before
 import org.junit.Rule
@@ -20,6 +22,10 @@ class ScenarioTest {
     @Before
     fun setUp() {
         gamePage = GamePage(scrambledWord = "diordna")
+        InstrumentationRegistry.getInstrumentation().targetContext.getSharedPreferences(
+            R.string.app_name.toString(),
+            Context.MODE_PRIVATE
+        ).edit().clear().apply()
     }
 
     /**

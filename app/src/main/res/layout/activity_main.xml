@@ -9,7 +9,7 @@
     android:padding="32dp"
     tools:context=".MainActivity">
 
-    <TextView
+    <com.github.andrewmaneshin.unscrambleword.view.scrambleword.ScrambleWordTextView
         android:id="@+id/scrambledWordTextView"
         style="@style/MaterialAlertDialog.Material3.Title.Text"
         android:layout_width="wrap_content"
@@ -18,25 +18,17 @@
         android:paddingVertical="64dp"
         tools:text="ANIORDD" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputLayout"
+    <com.github.andrewmaneshin.unscrambleword.view.input.InputView
+        android:id="@+id/inputView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="32dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/inputEditText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:singleLine="true" />
-    </com.google.android.material.textfield.TextInputLayout>
+        android:layout_height="wrap_content" />
 
     <Space
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_weight="2" />
 
-    <Button
+    <com.github.andrewmaneshin.unscrambleword.view.check.CheckButton
         android:id="@+id/checkButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,7 +36,7 @@
         android:layout_marginVertical="8dp"
         android:text="@string/check" />
 
-    <Button
+    <com.github.andrewmaneshin.unscrambleword.view.visibilitybutton.VisibilityButton
         android:id="@+id/skipButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,7 +44,7 @@
         android:layout_marginVertical="8dp"
         android:text="@string/skip" />
 
-    <Button
+    <com.github.andrewmaneshin.unscrambleword.view.visibilitybutton.VisibilityButton
         android:id="@+id/nextButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

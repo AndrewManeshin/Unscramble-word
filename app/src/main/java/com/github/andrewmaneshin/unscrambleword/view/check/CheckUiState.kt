@@ -1,21 +1,19 @@
-package com.github.andrewmaneshin.unscrambleword
+package com.github.andrewmaneshin.unscrambleword.view.check
 
 import android.view.View
-import android.widget.Button
 import java.io.Serializable
 
 interface CheckUiState : Serializable {
 
-    fun update(checkButton: Button)
+    fun update(updateCheckButton: UpdateCheckButton)
 
     abstract class Abstract(
         private val visible: Int,
         private val enabled: Boolean
     ) : CheckUiState {
 
-        override fun update(checkButton: Button) = with(checkButton) {
-            visibility = visible
-            isEnabled = enabled
+        override fun update(updateCheckButton: UpdateCheckButton) {
+            updateCheckButton.update(visible, enabled)
         }
     }
 

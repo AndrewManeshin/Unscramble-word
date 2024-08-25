@@ -1,7 +1,6 @@
 package com.github.andrewmaneshin.unscrambleword.game
 
 import android.view.KeyEvent
-import android.view.View
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.ViewActions.click
@@ -18,19 +17,13 @@ import com.github.andrewmaneshin.unscrambleword.R
 import com.github.andrewmaneshin.unscrambleword.TextInputLayoutErrorEnabledMatcher
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 
-class InputUI(
-    containerIdMatcher: Matcher<View>,
-    containerClassTypeMatcher: Matcher<View>
-) {
+class InputUI {
 
     private val layoutInteraction: ViewInteraction = onView(
         allOf(
             withId(R.id.inputLayout),
-            containerIdMatcher,
-            containerClassTypeMatcher,
             isAssignableFrom(TextInputLayout::class.java)
         )
     )

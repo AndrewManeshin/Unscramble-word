@@ -1,6 +1,5 @@
 package com.github.andrewmaneshin.unscrambleword
 
-import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -20,32 +19,20 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val update: () -> Unit = {
+            with(binding) {
+                uiState.update(
+                    scrambledWordTextView,
+                    inputView,
+                    checkButton,
+                    skipButton,
+                    nextButton
+                )
+            }
+        }
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        enableEdgeToEdge()
-        ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-
-        viewModel = (application as UGApp).gameViewModel
-
-        binding.nextButton.setOnClickListener {
-            uiState = viewModel.next()
-            uiState.update(binding = binding)
-        }
-
-        binding.skipButton.setOnClickListener {
-            uiState = viewModel.skip()
-            uiState.update(binding = binding)
-        }
-
-        binding.checkButton.setOnClickListener {
-            uiState = viewModel.check(text = binding.inputEditText.text.toString())
-            uiState.update(binding = binding)
-        }
 
         textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
@@ -54,37 +41,45 @@ class MainActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
             override fun afterTextChanged(s: Editable?) {
                 uiState = viewModel.handleUserInput(text = s.toString())
-                uiState.update(binding = binding)
+                update.invoke()
             }
         }
 
-        uiState = if (savedInstanceState == null)
-            viewModel.init()
-        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            savedInstanceState.getSerializable(UI_STATE_KEY, GameUiState::class.java)!!
-        } else {
-            savedInstanceState.getSerializable(UI_STATE_KEY) as GameUiState
+        viewModel = (application as UGApp).gameViewModel
+
+        enableEdgeToEdge()
+        ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
         }
 
-        uiState.update(binding = binding)
+        binding.nextButton.setOnClickListener {
+            uiState = viewModel.next()
+            update.invoke()
+        }
+
+        binding.skipButton.setOnClickListener {
+            uiState = viewModel.skip()
+            update.invoke()
+        }
+
+        binding.checkButton.setOnClickListener {
+            uiState = viewModel.check(text = binding.inputView.text())
+            update.invoke()
+        }
+
+        uiState = viewModel.init(savedInstanceState == null)
+        update.invoke()
     }
 
     override fun onResume() {
         super.onResume()
-        binding.inputEditText.addTextChangedListener(textWatcher)
+        binding.inputView.addTextChangedListener(textWatcher)
     }
 
     override fun onPause() {
         super.onPause()
-        binding.inputEditText.removeTextChangedListener(textWatcher)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putSerializable(UI_STATE_KEY, uiState)
-    }
-
-    private companion object {
-        private const val UI_STATE_KEY = "UI_STATE_KEY"
+        binding.inputView.removeTextChangedListener(textWatcher)
     }
 }

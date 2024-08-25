@@ -13,16 +13,12 @@ class GamePage(scrambledWord: String) {
     private val containerIdMatcher: Matcher<View> = withParent(withId(R.id.rootLayout))
     private val classTypeMatcher: Matcher<View> =
         withParent(isAssignableFrom(LinearLayout::class.java))
-
     private val scrambleWordUi = ScrambleWordUi(
         scrambledWord = scrambledWord,
         containerIdMatcher = containerIdMatcher,
         containerClassTypeMatcher = classTypeMatcher
     )
-    private val inputUi = InputUI(
-        containerIdMatcher = containerIdMatcher,
-        containerClassTypeMatcher = classTypeMatcher
-    )
+    private val inputUi = InputUI()
     private val skipUi = ButtonUi(
         text = R.string.skip,
         id = R.id.skipButton,

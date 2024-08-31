@@ -7,6 +7,7 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.action.ViewActions.pressKey
 import androidx.test.espresso.action.ViewActions.typeText
+import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isEnabled
@@ -98,5 +99,10 @@ class InputUI {
 
     fun addInput(text: String) {
         inputInteraction.perform(typeText(text), closeSoftKeyboard())
+    }
+
+    fun assertDoesNotExist() {
+        layoutInteraction.check(doesNotExist())
+        inputInteraction.check(doesNotExist())
     }
 }

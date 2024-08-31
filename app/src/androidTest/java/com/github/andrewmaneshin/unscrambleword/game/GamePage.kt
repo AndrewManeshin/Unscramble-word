@@ -98,4 +98,12 @@ class GamePage(scrambledWord: String) {
     fun removeInputLastLetter() {
         inputUi.removeInputLastLetter()
     }
+
+    fun assertNotVisible() {
+        scrambleWordUi.assertDoesNotExist()
+        checkUi.assertDoesNotExist()
+        skipUi.assertDoesNotExist()
+        nextUi.assertDoesNotExist()
+        inputUi.assertDoesNotExist()
+    }
 }

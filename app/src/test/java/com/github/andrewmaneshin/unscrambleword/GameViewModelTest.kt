@@ -1,5 +1,8 @@
 package com.github.andrewmaneshin.unscrambleword
 
+import com.github.andrewmaneshin.unscrambleword.game.GameRepository
+import com.github.andrewmaneshin.unscrambleword.game.GameUiState
+import com.github.andrewmaneshin.unscrambleword.game.GameViewModel
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test

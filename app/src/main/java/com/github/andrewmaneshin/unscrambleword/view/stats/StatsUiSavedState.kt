@@ -4,7 +4,7 @@ import android.os.Build
 import android.os.Parcel
 import android.os.Parcelable
 import android.view.View
-import com.github.andrewmaneshin.unscrambleword.StatsUiState
+import com.github.andrewmaneshin.unscrambleword.stats.StatsUiState
 
 class StatsUiSavedState : View.BaseSavedState {
 

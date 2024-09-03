@@ -1,5 +1,6 @@
-package com.github.andrewmaneshin.unscrambleword
+package com.github.andrewmaneshin.unscrambleword.game
 
+import com.github.andrewmaneshin.unscrambleword.stats.NavigateToGameOver
 import com.github.andrewmaneshin.unscrambleword.view.check.CheckUiState
 import com.github.andrewmaneshin.unscrambleword.view.check.UpdateCheckButton
 import com.github.andrewmaneshin.unscrambleword.view.input.InputUiState
@@ -16,18 +17,11 @@ interface GameUiState {
         checkButton: UpdateCheckButton,
         skipButton: UpdateVisibility,
         nextButton: UpdateVisibility
-    )
+    ) = Unit
 
-    object Empty : GameUiState {
+    fun navigate(navigate: NavigateToGameOver) = Unit
 
-        override fun update(
-            scrambleTextView: UpdateText,
-            inputView: UpdateInput,
-            checkButton: UpdateCheckButton,
-            skipButton: UpdateVisibility,
-            nextButton: UpdateVisibility
-        ) = Unit
-    }
+    object Empty : GameUiState
 
     abstract class Abstract(
         private val checkUiState: CheckUiState,
@@ -97,6 +91,12 @@ interface GameUiState {
             super.update(scrambleTextView, inputView, checkButton, skipButton, nextButton)
             skipButton.update(VisibilityUiState.Gone)
             nextButton.update(VisibilityUiState.Visible)
+        }
+    }
+
+    object Finish : GameUiState {
+        override fun navigate(navigate: NavigateToGameOver) {
+            navigate.navigateToGameOver()
         }
     }
 }

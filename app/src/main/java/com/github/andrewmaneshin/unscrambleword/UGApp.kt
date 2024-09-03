@@ -1,7 +1,9 @@
 package com.github.andrewmaneshin.unscrambleword
 
 import android.app.Application
-import android.content.Context
+import com.github.andrewmaneshin.unscrambleword.game.GameRepository
+import com.github.andrewmaneshin.unscrambleword.game.GameViewModel
+import com.github.andrewmaneshin.unscrambleword.stats.GameOverViewModel
 
 class UGApp : Application() {
 
@@ -16,7 +18,7 @@ class UGApp : Application() {
                 IntCache.Base(
                     getSharedPreferences(
                         R.string.app_name.toString(),
-                        Context.MODE_PRIVATE
+                        MODE_PRIVATE
                     ), "indexKey", 0
                 ),
                 ShuffleStrategy.Reverse()

@@ -1,4 +1,4 @@
-package com.github.andrewmaneshin.unscrambleword
+package com.github.andrewmaneshin.unscrambleword.stats
 
 import com.github.andrewmaneshin.unscrambleword.view.stats.UpdateStats
 import java.io.Serializable

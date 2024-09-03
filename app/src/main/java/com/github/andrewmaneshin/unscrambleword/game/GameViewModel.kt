@@ -1,4 +1,4 @@
-package com.github.andrewmaneshin.unscrambleword
+package com.github.andrewmaneshin.unscrambleword.game
 
 class GameViewModel(
     private val repository: GameRepository

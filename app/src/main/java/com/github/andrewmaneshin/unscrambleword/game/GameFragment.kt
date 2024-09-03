@@ -7,11 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.github.andrewmaneshin.unscrambleword.GameUiState
-import com.github.andrewmaneshin.unscrambleword.GameViewModel
-import com.github.andrewmaneshin.unscrambleword.Navigate
 import com.github.andrewmaneshin.unscrambleword.UGApp
 import com.github.andrewmaneshin.unscrambleword.databinding.FragmentGameBinding
+import com.github.andrewmaneshin.unscrambleword.stats.NavigateToGameOver
 
 class GameFragment : Fragment() {
 
@@ -45,6 +43,7 @@ class GameFragment : Fragment() {
                     nextButton
                 )
             }
+            uiState.navigate(requireActivity() as NavigateToGameOver)
         }
 
         textWatcher = object : TextWatcher {
@@ -62,8 +61,7 @@ class GameFragment : Fragment() {
         viewModel = (requireActivity().application as UGApp).gameViewModel
 
         binding.nextButton.setOnClickListener {
-            (requireActivity() as Navigate).navigateToGameOver()
-            uiState = viewModel.init(true)
+            uiState = viewModel.next()
             update.invoke()
         }
 

@@ -6,9 +6,11 @@ import android.content.Context
 class UGApp : Application() {
 
     lateinit var gameViewModel: GameViewModel
+    lateinit var gameOverViewModel: GameOverViewModel
 
     override fun onCreate() {
         super.onCreate()
+
         gameViewModel = GameViewModel(
             GameRepository.Base(
                 IntCache.Base(
@@ -20,5 +22,8 @@ class UGApp : Application() {
                 ShuffleStrategy.Reverse()
             )
         )
+
+        gameOverViewModel = GameOverViewModel()
     }
 }
+

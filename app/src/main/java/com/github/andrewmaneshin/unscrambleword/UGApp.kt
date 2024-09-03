@@ -4,6 +4,7 @@ import android.app.Application
 import com.github.andrewmaneshin.unscrambleword.game.GameRepository
 import com.github.andrewmaneshin.unscrambleword.game.GameViewModel
 import com.github.andrewmaneshin.unscrambleword.stats.GameOverViewModel
+import com.github.andrewmaneshin.unscrambleword.stats.StatsRepository
 
 class UGApp : Application() {
 
@@ -13,19 +14,25 @@ class UGApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        val sharedPreferences = getSharedPreferences(R.string.app_name.toString(), MODE_PRIVATE)
+        val corrects = IntCache.Base(sharedPreferences, "corrects", 0)
+        val incorrects = IntCache.Base(sharedPreferences, "incorrects", 0)
+
         gameViewModel = GameViewModel(
             GameRepository.Base(
-                IntCache.Base(
-                    getSharedPreferences(
-                        R.string.app_name.toString(),
-                        MODE_PRIVATE
-                    ), "indexKey", 0
-                ),
+                corrects,
+                incorrects,
+                IntCache.Base(sharedPreferences, "indexKey", 0),
                 ShuffleStrategy.Reverse()
             )
         )
 
-        gameOverViewModel = GameOverViewModel()
+        gameOverViewModel = GameOverViewModel(
+            StatsRepository.Base(
+                corrects,
+                incorrects
+            )
+        )
     }
 }
 

@@ -6,19 +6,17 @@ class GameViewModel(
 
     fun next(): GameUiState {
         repository.next()
-        return if (repository.isLastWord())
+        return if (repository.isLastWord()) {
+            repository.clear()
             GameUiState.Finish
-        else
+        } else
             init()
     }
 
-    fun skip(): GameUiState {
-        repository.next()
-        return init()
-    }
+    fun skip() = next()
 
     fun check(text: String): GameUiState {
-        return if (repository.originalWord().equals(text, true))
+        return if (repository.check(text))
             GameUiState.Correct
         else
             GameUiState.Incorrect

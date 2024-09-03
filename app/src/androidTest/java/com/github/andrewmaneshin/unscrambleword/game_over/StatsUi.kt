@@ -23,7 +23,7 @@ class StatsUi(
     private val interaction = onView(
         allOf(
             withId(R.id.statsTextView),
-            withText("Game Over\nCorrects: $correct\nIncorrects: $incorrect"),
+            withText("Game Over\n\nCorrects: $correct\nIncorrects: $incorrect"),
             isAssignableFrom(TextView::class.java),
             containerIdMatcher,
             classTypeMatcher

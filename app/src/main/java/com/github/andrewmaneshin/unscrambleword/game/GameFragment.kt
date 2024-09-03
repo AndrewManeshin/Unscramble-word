@@ -56,7 +56,6 @@ class GameFragment : Fragment() {
                 update.invoke()
             }
         }
-        binding.inputView.addTextChangedListener(textWatcher)
 
         viewModel = (requireActivity().application as UGApp).gameViewModel
 
@@ -79,8 +78,14 @@ class GameFragment : Fragment() {
         update.invoke()
     }
 
+    override fun onStart() {
+        super.onStart()
+        binding.inputView.addTextChangedListener(textWatcher)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
+        binding.inputView.removeTextChangedListener(textWatcher)
         _binding = null
     }
 }

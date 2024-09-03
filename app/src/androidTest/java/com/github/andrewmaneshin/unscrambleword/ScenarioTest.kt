@@ -133,6 +133,7 @@ class ScenarioTest {
         gamePage.clickCheck()
         doWithRecreate { gamePage.assertCorrectState() }
         gamePage.clickNext()
+        gamePage = GamePage(scrambledWord = "poleved")
         doWithRecreate { gamePage.assertInitialState() }
         gamePage.addInput("develop")
         gamePage.clickCheck()
@@ -148,10 +149,12 @@ class ScenarioTest {
         //endregion
 
         //region 1 correct and 1 incorrect
+        gamePage = GamePage(scrambledWord = "diordna")
         gamePage.addInput("android")
         gamePage.clickCheck()
         doWithRecreate { gamePage.assertCorrectState() }
         gamePage.clickNext()
+        gamePage = GamePage(scrambledWord = "poleved")
         doWithRecreate { gamePage.assertInitialState() }
         gamePage.addInput("develot")
         gamePage.clickCheck()
@@ -167,10 +170,12 @@ class ScenarioTest {
         //endregion
 
         //region 0 correct and 2 incorrect
+        gamePage = GamePage(scrambledWord = "diordna")
         gamePage.addInput("androit")
         gamePage.clickCheck()
         doWithRecreate { gamePage.assertIncorrectState() }
         gamePage.clickSkip()
+        gamePage = GamePage(scrambledWord = "poleved")
         doWithRecreate { gamePage.assertInitialState() }
         gamePage.addInput("develot")
         gamePage.clickCheck()

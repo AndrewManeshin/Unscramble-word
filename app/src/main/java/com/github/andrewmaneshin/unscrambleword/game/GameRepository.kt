@@ -8,9 +8,13 @@ interface GameRepository {
     fun scrambledWord(): String
     fun originalWord(): String
     fun next()
+    fun check(text: String): Boolean
     fun isLastWord(): Boolean
+    fun clear()
 
     class Base(
+        private val corrects: IntCache,
+        private val incorrects: IntCache,
         private val index: IntCache,
         private val shuffleStrategy: ShuffleStrategy
     ) : GameRepository {
@@ -23,9 +27,21 @@ interface GameRepository {
         override fun originalWord(): String = originalList[index.read()]
 
         override fun next() {
-            index.save(if (index.read() == originalList.size) 0 else index.read() + 1)
+            index.save(index.read() + 1)
+        }
+
+        override fun check(text: String) = if (originalWord().equals(text, true)) {
+            corrects.save(corrects.read() + 1)
+            true
+        } else {
+            incorrects.save(incorrects.read() + 1)
+            false
         }
 
         override fun isLastWord(): Boolean = index.read() == originalList.size
+
+        override fun clear() {
+            index.save(0)
+        }
     }
 }

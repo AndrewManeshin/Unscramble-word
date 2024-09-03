@@ -130,7 +130,17 @@ private class FakeGameRepository : GameRepository {
         if (index == originalList.size) index = 0 else ++index
     }
 
+    override fun check(text: String): Boolean {
+        return if (originalWord().equals(text, true)) {
+            true
+        } else {
+            false
+        }
+    }
+
     override fun isLastWord(): Boolean {
         return index == originalList.size
     }
+
+    override fun clear() = Unit
 }

@@ -88,6 +88,24 @@ class GameViewModelTest {
         expected = GameUiState.Correct
         assertEquals(expected, actual)
     }
+
+    /**
+     * UGTC-07 Next
+     */
+    @Test
+    fun NextTest() {
+        var actual: GameUiState = viewModel.next()
+        var expected: GameUiState = GameUiState.Initial("diordna")
+        assertEquals(expected, actual)
+
+        actual = viewModel.next()
+        expected = GameUiState.Initial("poleved")
+        assertEquals(expected, actual)
+
+        actual = viewModel.next()
+        expected = GameUiState.Finish
+        assertEquals(expected, actual)
+    }
 }
 
 private class FakeGameRepository : GameRepository {
@@ -103,5 +121,9 @@ private class FakeGameRepository : GameRepository {
 
     override fun next() {
         if (index == originalList.size - 1) index = 0 else ++index
+    }
+
+    override fun isLastWord(): Boolean {
+        return index == originalList.size
     }
 }

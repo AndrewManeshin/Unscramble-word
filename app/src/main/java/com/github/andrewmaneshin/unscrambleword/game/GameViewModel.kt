@@ -6,7 +6,10 @@ class GameViewModel(
 
     fun next(): GameUiState {
         repository.next()
-        return init()
+        return if (repository.isLastWord())
+            GameUiState.Finish
+        else
+            init()
     }
 
     fun skip(): GameUiState {

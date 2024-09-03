@@ -29,7 +29,7 @@ class GameOverFragment : Fragment() {
 
         val gameOverViewModel = (activity?.application as UGApp).gameOverViewModel
 
-        binding.statsTextView.updateUiState(gameOverViewModel.statsUiState) //todo
+        binding.statsTextView.updateUiState(gameOverViewModel.statsUiState())
 
         binding.newGameButton.setOnClickListener {
             (requireActivity() as NavigateToGame).navigateToGame()

@@ -25,7 +25,7 @@ class UGApp : Application() {
             )
         )
 
-        gameOverViewModel = GameOverViewModel()
+//        gameOverViewModel = GameOverViewModel()
     }
 }
 

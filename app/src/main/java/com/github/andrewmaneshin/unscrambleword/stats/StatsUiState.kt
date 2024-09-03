@@ -7,7 +7,7 @@ interface StatsUiState : Serializable {
 
     fun show(statsTextView: UpdateStats)
 
-    class Base(
+    data class Base(
         private val corrects: Int,
         private val incorrects: Int
     ) : StatsUiState {

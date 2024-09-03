@@ -94,7 +94,7 @@ class GameViewModelTest {
      */
     @Test
     fun NextTest() {
-        var actual: GameUiState = viewModel.next()
+        var actual: GameUiState = viewModel.init()
         var expected: GameUiState = GameUiState.Initial("diordna")
         assertEquals(expected, actual)
 
@@ -104,6 +104,10 @@ class GameViewModelTest {
 
         actual = viewModel.next()
         expected = GameUiState.Finish
+        assertEquals(expected, actual)
+
+        actual = viewModel.next()
+        expected = GameUiState.Initial("diordna")
         assertEquals(expected, actual)
     }
 }
@@ -120,7 +124,7 @@ private class FakeGameRepository : GameRepository {
     override fun originalWord(): String = originalList[index]
 
     override fun next() {
-        if (index == originalList.size - 1) index = 0 else ++index
+        if (index == originalList.size) index = 0 else ++index
     }
 
     override fun isLastWord(): Boolean {

@@ -5,6 +5,7 @@ interface GameRepository {
     fun scrambledWord(): String
     fun originalWord(): String
     fun next()
+    fun isLastWord(): Boolean
 
     class Base(
         private val index: IntCache,
@@ -19,7 +20,9 @@ interface GameRepository {
         override fun originalWord(): String = originalList[index.read()]
 
         override fun next() {
-            if (index.read() == originalList.size - 1) index.save(0) else index.save(index.read() + 1)
+            index.save(if (index.read() == originalList.size) 0 else index.read() + 1)
         }
+
+        override fun isLastWord(): Boolean = index.read() == originalList.size
     }
 }

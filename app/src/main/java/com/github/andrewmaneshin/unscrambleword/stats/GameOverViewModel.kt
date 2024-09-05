@@ -1,6 +1,12 @@
 package com.github.andrewmaneshin.unscrambleword.stats
 
-class GameOverViewModel(private val repository: StatsRepository) {
+import com.github.andrewmaneshin.unscrambleword.ClearViewModel
+import com.github.andrewmaneshin.unscrambleword.MyViewModel
+
+class GameOverViewModel(
+    private val clearViewModel: ClearViewModel,
+    private val repository: StatsRepository
+) : MyViewModel {
 
     fun init(isFirstRun: Boolean): StatsUiState {
         if (isFirstRun) {
@@ -8,5 +14,9 @@ class GameOverViewModel(private val repository: StatsRepository) {
             repository.clear()
             return StatsUiState.Base(corrects, incorrects)
         } else return StatsUiState.Empty
+    }
+
+    fun clear() {
+        clearViewModel.clear(GameOverViewModel::class.java)
     }
 }

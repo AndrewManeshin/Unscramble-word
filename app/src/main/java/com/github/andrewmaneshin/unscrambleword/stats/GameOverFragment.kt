@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.github.andrewmaneshin.unscrambleword.UGApp
+import com.github.andrewmaneshin.unscrambleword.ProvideViewModel
 import com.github.andrewmaneshin.unscrambleword.databinding.FragmentGameOverBinding
 import com.github.andrewmaneshin.unscrambleword.game.NavigateToGame
 
@@ -27,9 +27,11 @@ class GameOverFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val viewModel = (requireActivity().application as UGApp).gameOverViewModel
+        val viewModel =
+            (requireActivity().application as ProvideViewModel).makeViewModel(GameOverViewModel::class.java)
 
         binding.newGameButton.setOnClickListener {
+            viewModel.clear()
             (requireActivity() as NavigateToGame).navigateToGame()
         }
         val uiState = viewModel.init(savedInstanceState == null)

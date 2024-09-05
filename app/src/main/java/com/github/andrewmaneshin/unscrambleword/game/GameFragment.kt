@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.github.andrewmaneshin.unscrambleword.UGApp
+import com.github.andrewmaneshin.unscrambleword.ProvideViewModel
 import com.github.andrewmaneshin.unscrambleword.databinding.FragmentGameBinding
 import com.github.andrewmaneshin.unscrambleword.stats.NavigateToGameOver
 
@@ -57,7 +57,8 @@ class GameFragment : Fragment() {
             }
         }
 
-        viewModel = (requireActivity().application as UGApp).gameViewModel
+        viewModel =
+            (requireActivity().application as ProvideViewModel).makeViewModel(GameViewModel::class.java)
 
         binding.nextButton.setOnClickListener {
             uiState = viewModel.next()

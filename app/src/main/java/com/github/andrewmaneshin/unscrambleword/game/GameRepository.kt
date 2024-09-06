@@ -1,7 +1,6 @@
 package com.github.andrewmaneshin.unscrambleword.game
 
 import com.github.andrewmaneshin.unscrambleword.IntCache
-import com.github.andrewmaneshin.unscrambleword.ShuffleStrategy
 
 interface GameRepository {
 

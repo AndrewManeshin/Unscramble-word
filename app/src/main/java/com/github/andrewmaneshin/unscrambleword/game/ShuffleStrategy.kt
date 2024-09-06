@@ -1,4 +1,4 @@
-package com.github.andrewmaneshin.unscrambleword
+package com.github.andrewmaneshin.unscrambleword.game
 
 import kotlin.random.Random
 

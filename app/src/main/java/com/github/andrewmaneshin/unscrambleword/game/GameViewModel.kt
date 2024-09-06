@@ -1,7 +1,7 @@
 package com.github.andrewmaneshin.unscrambleword.game
 
-import com.github.andrewmaneshin.unscrambleword.ClearViewModel
 import com.github.andrewmaneshin.unscrambleword.MyViewModel
+import com.github.andrewmaneshin.unscrambleword.di.ClearViewModel
 import com.github.andrewmaneshin.unscrambleword.stats.GameOverViewModel
 
 class GameViewModel(

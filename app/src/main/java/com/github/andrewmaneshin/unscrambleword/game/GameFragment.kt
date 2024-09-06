@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.github.andrewmaneshin.unscrambleword.ProvideViewModel
 import com.github.andrewmaneshin.unscrambleword.databinding.FragmentGameBinding
+import com.github.andrewmaneshin.unscrambleword.di.ProvideViewModel
 import com.github.andrewmaneshin.unscrambleword.stats.NavigateToGameOver
 
 class GameFragment : Fragment() {

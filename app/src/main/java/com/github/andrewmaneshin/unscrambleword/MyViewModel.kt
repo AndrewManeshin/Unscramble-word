@@ -1,0 +1,3 @@
+package com.github.andrewmaneshin.unscrambleword
+
+interface MyViewModel

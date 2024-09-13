@@ -11,31 +11,31 @@ import org.hamcrest.Matcher
 class GamePage(scrambledWord: String) {
 
     private val containerIdMatcher: Matcher<View> = withParent(withId(R.id.rootLayout))
-    private val classTypeMatcher: Matcher<View> =
+    private val containerClassTypeMatcher: Matcher<View> =
         withParent(isAssignableFrom(LinearLayout::class.java))
     private val scrambleWordUi = ScrambleWordUi(
         scrambledWord = scrambledWord,
         containerIdMatcher = containerIdMatcher,
-        containerClassTypeMatcher = classTypeMatcher
+        containerClassTypeMatcher = containerClassTypeMatcher
     )
     private val inputUi = InputUI()
     private val skipUi = ButtonUi(
         text = R.string.skip,
         id = R.id.skipButton,
         containerIdMatcher = containerIdMatcher,
-        containerClassTypeMatcher = classTypeMatcher
+        containerClassTypeMatcher = containerClassTypeMatcher
     )
     private val checkUi = ButtonUi(
         text = R.string.check,
         id = R.id.checkButton,
         containerIdMatcher = containerIdMatcher,
-        containerClassTypeMatcher = classTypeMatcher
+        containerClassTypeMatcher = containerClassTypeMatcher
     )
     private val nextUi = ButtonUi(
         text = R.string.next,
         id = R.id.nextButton,
         containerIdMatcher = containerIdMatcher,
-        containerClassTypeMatcher = classTypeMatcher
+        containerClassTypeMatcher = containerClassTypeMatcher
     )
 
 

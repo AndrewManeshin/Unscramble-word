@@ -6,6 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.github.andrewmaneshin.unscrambleword.game.GamePage
 import com.github.andrewmaneshin.unscrambleword.game_over.GameOverPage
+import com.github.andrewmaneshin.unscrambleword.load.LoadPage
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -34,6 +35,8 @@ class ScenarioTest {
      */
     @Test
     fun skipTest() {
+        loadTest()
+
         gamePage.clickSkip()
         gamePage = GamePage(scrambledWord = "poleved")
         doWithRecreate { gamePage.assertInitialState() }
@@ -43,7 +46,9 @@ class ScenarioTest {
      * UGTC-02 InsufficientInputTestCase
      */
     @Test
-    fun InsufficientInputTest() {
+    fun insufficientInputTest() {
+        loadTest()
+
         gamePage.addInput("adnroi")
         doWithRecreate { gamePage.assertInsufficientInputState() }
     }
@@ -52,7 +57,9 @@ class ScenarioTest {
      * UGTC-03 SufficientInputTestCase
      */
     @Test
-    fun SufficientInputTest() {
+    fun sufficientInputTest() {
+        loadTest()
+
         gamePage.addInput("androit")
         doWithRecreate { gamePage.assertSufficientInputState() }
     }
@@ -61,7 +68,9 @@ class ScenarioTest {
      * UGTC-04 Sufficient and Insufficient InputTestCase
      */
     @Test
-    fun SufficientAndInsufficientInputTest() {
+    fun sufficientAndInsufficientInputTest() {
+        loadTest()
+
         gamePage.addInput("adnroi")
         doWithRecreate { gamePage.assertInsufficientInputState() }
 
@@ -79,7 +88,9 @@ class ScenarioTest {
      * UGTC-05 IncorrectTestCase
      */
     @Test
-    fun IncorrectTest() {
+    fun incorrectTest() {
+        loadTest()
+
         gamePage.addInput("androit")
 
         gamePage.clickCheck()
@@ -90,7 +101,9 @@ class ScenarioTest {
      * UGTC-06 SkipAfterIncorrectTestCase
      */
     @Test
-    fun SkipAfterIncorrectTest() {
+    fun skipAfterIncorrectTest() {
+        loadTest()
+
         gamePage.addInput("androit")
 
         gamePage.clickCheck()
@@ -105,7 +118,9 @@ class ScenarioTest {
      * UGTC-07 CorrectAfterIncorrectTestCase
      */
     @Test
-    fun CorrectAfterIncorrectTest() {
+    fun correctAfterIncorrectTest() {
+        loadTest()
+
         gamePage.addInput("androit")
 
         gamePage.clickCheck()
@@ -127,7 +142,10 @@ class ScenarioTest {
      * UGTC-08 Game-over statistic
      */
     @Test
-    fun StatsTest() {
+    fun statsTest() {
+
+        loadTest()
+
         //region 2 correct and 0 incorrect
         gamePage.addInput("android")
         gamePage.clickCheck()
@@ -147,6 +165,8 @@ class ScenarioTest {
         gameOverPage.clickNewGame()
         doWithRecreate { gameOverPage.assertNotVisible() }
         //endregion
+
+        loadTest()
 
         //region 1 correct and 1 incorrect
         gamePage = GamePage(scrambledWord = "diordna")
@@ -169,6 +189,8 @@ class ScenarioTest {
         doWithRecreate { gameOverPage.assertNotVisible() }
         //endregion
 
+        loadTest()
+
         //region 0 correct and 2 incorrect
         gamePage = GamePage(scrambledWord = "diordna")
         gamePage.addInput("androit")
@@ -189,6 +211,50 @@ class ScenarioTest {
         gameOverPage.clickNewGame()
         doWithRecreate { gameOverPage.assertNotVisible() }
         //endregion
+    }
+
+    /**
+     * UGTC-09 LoadTestCase
+     */
+    @Test
+    fun loadTest() {
+        val loadPage = LoadPage()
+
+        doWithRecreate { loadPage.assertProgressState() }
+        loadPage.waitTillError()
+        doWithRecreate { loadPage.assertErrorState() }
+        loadPage.clickRetry()
+        doWithRecreate { loadPage.assertProgressState() }
+        loadPage.waitTillGone()
+
+        doWithRecreate { gamePage.assertInitialState() }
+    }
+
+    /**
+     * UGTC-10 SecondLoadTestCase
+     */
+    @Test
+    fun secondLoadTest() {
+        val loadPage = LoadPage()
+
+        loadTest()
+
+        gamePage.addInput("android")
+        gamePage.clickCheck()
+        doWithRecreate { gamePage.assertCorrectState() }
+        gamePage.clickNext()
+        gamePage = GamePage(scrambledWord = "poleved")
+        doWithRecreate { gamePage.assertInitialState() }
+        gamePage.addInput("develop")
+        gamePage.clickCheck()
+        doWithRecreate { gamePage.assertCorrectState() }
+        gamePage.clickNext()
+        gamePage.assertNotVisible()
+
+        doWithRecreate { loadPage.assertProgressState() }
+        loadPage.waitTillGone()
+
+        doWithRecreate { gamePage.assertInitialState() }
     }
 
     private fun doWithRecreate(assert: () -> Unit) {

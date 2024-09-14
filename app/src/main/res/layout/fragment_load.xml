@@ -21,6 +21,7 @@
         tools:text="@string/no_internet_connection" />
 
     <com.github.andrewmaneshin.unscrambleword.view.visibilitybutton.VisibilityButton
+        android:id="@+id/retryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/retry" />

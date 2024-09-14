@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.github.andrewmaneshin.unscrambleword.view.stats.StatsTextView
+    <com.github.andrewmaneshin.unscrambleword.stats.view.stats.StatsTextView
         android:id="@+id/statsTextView"
         style="@style/TextAppearance.AppCompat.Title"
         android:layout_width="wrap_content"

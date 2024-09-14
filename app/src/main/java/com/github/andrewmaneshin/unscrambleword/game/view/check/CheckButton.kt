@@ -1,4 +1,4 @@
-package com.github.andrewmaneshin.unscrambleword.view.check
+package com.github.andrewmaneshin.unscrambleword.game.view.check
 
 import android.content.Context
 import android.os.Parcelable

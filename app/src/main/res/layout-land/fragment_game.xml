@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1">
 
-        <com.github.andrewmaneshin.unscrambleword.view.scrambleword.ScrambleWordTextView
+        <com.github.andrewmaneshin.unscrambleword.game.view.scrambleword.ScrambleWordTextView
             android:id="@+id/scrambledWordTextView"
             style="@style/MaterialAlertDialog.Material3.Title.Text"
             android:layout_width="wrap_content"
@@ -23,11 +23,11 @@
             android:paddingVertical="64dp"
             tools:text="ANIORDD" />
 
-        <com.github.andrewmaneshin.unscrambleword.view.input.InputView
+        <com.github.andrewmaneshin.unscrambleword.game.view.input.InputView
             android:id="@+id/inputView"
-            android:layout_gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
     </FrameLayout>
 
     <LinearLayout
@@ -37,7 +37,7 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <com.github.andrewmaneshin.unscrambleword.view.check.CheckButton
+        <com.github.andrewmaneshin.unscrambleword.game.view.check.CheckButton
             android:id="@+id/checkButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

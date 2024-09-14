@@ -1,10 +1,9 @@
-package com.github.andrewmaneshin.unscrambleword.view.stats
+package com.github.andrewmaneshin.unscrambleword.stats.view.stats
 
 import android.os.Build
 import android.os.Parcel
 import android.os.Parcelable
 import android.view.View
-import com.github.andrewmaneshin.unscrambleword.stats.StatsUiState
 
 class StatsUiSavedState : View.BaseSavedState {
 

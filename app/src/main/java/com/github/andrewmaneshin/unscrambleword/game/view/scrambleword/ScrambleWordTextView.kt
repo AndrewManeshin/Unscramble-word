@@ -1,4 +1,4 @@
-package com.github.andrewmaneshin.unscrambleword.view.scrambleword
+package com.github.andrewmaneshin.unscrambleword.game.view.scrambleword
 
 import android.content.Context
 import android.util.AttributeSet

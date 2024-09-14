@@ -1,6 +1,5 @@
-package com.github.andrewmaneshin.unscrambleword.stats
+package com.github.andrewmaneshin.unscrambleword.stats.view.stats
 
-import com.github.andrewmaneshin.unscrambleword.view.stats.UpdateStats
 import java.io.Serializable
 
 interface StatsUiState : Serializable {

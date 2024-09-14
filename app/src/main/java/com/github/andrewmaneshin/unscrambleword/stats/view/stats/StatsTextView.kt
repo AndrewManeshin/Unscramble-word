@@ -1,10 +1,9 @@
-package com.github.andrewmaneshin.unscrambleword.view.stats
+package com.github.andrewmaneshin.unscrambleword.stats.view.stats
 
 import android.content.Context
 import android.os.Parcelable
 import android.util.AttributeSet
 import com.github.andrewmaneshin.unscrambleword.R
-import com.github.andrewmaneshin.unscrambleword.stats.StatsUiState
 
 class StatsTextView : androidx.appcompat.widget.AppCompatTextView, UpdateStats {
 

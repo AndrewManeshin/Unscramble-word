@@ -1,8 +1,7 @@
-package com.github.andrewmaneshin.unscrambleword
+package com.github.andrewmaneshin.unscrambleword.game
 
-import com.github.andrewmaneshin.unscrambleword.game.GameRepository
-import com.github.andrewmaneshin.unscrambleword.game.GameUiState
-import com.github.andrewmaneshin.unscrambleword.game.GameViewModel
+import com.github.andrewmaneshin.unscrambleword.MyViewModel
+import com.github.andrewmaneshin.unscrambleword.di.ClearViewModel
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -13,7 +12,8 @@ class GameViewModelTest {
 
     @Before
     fun setup() {
-        viewModel = GameViewModel(repository = FakeGameRepository())
+        viewModel =
+            GameViewModel(repository = FakeGameRepository(), clearViewModel = FakeClearViewModel())
     }
 
     /**
@@ -143,4 +143,8 @@ private class FakeGameRepository : GameRepository {
     }
 
     override fun clear() = Unit
+}
+
+private class FakeClearViewModel : ClearViewModel {
+    override fun clear(clasz: Class<out MyViewModel>) = Unit
 }

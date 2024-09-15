@@ -1,10 +1,14 @@
-package com.github.andrewmaneshin.unscrambleword.view.visibilitybutton
+package com.github.andrewmaneshin.unscrambleword.load.view.load
 
 import android.content.Context
 import android.os.Parcelable
 import android.util.AttributeSet
+import android.widget.ProgressBar
+import com.github.andrewmaneshin.unscrambleword.view.visibilitybutton.UpdateVisibility
+import com.github.andrewmaneshin.unscrambleword.view.visibilitybutton.VisibilitySavedState
+import com.github.andrewmaneshin.unscrambleword.view.visibilitybutton.VisibilityUiState
 
-class VisibilityButton : androidx.appcompat.widget.AppCompatButton, UpdateVisibility {
+class LoadProgressBar : ProgressBar, UpdateVisibility {
 
     private lateinit var state: VisibilityUiState
 
@@ -30,19 +34,12 @@ class VisibilityButton : androidx.appcompat.widget.AppCompatButton, UpdateVisibi
         update(restoredState.restore())
     }
 
-    override fun update(visible: Int) {
-        visibility = visible
+    override fun update(visibility: Int) {
+        this.visibility = visibility
     }
 
     override fun update(state: VisibilityUiState) {
         this.state = state
         state.update(this)
     }
-}
-
-interface UpdateVisibility {
-
-    fun update(state: VisibilityUiState)
-
-    fun update(visible: Int)
 }

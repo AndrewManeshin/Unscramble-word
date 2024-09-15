@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.github.andrewmaneshin.unscrambleword.databinding.FragmentLoadBinding
 import com.github.andrewmaneshin.unscrambleword.di.ProvideViewModel
+import com.github.andrewmaneshin.unscrambleword.game.NavigateToGame
 
 class LoadFragment : Fragment() {
 
@@ -22,6 +23,8 @@ class LoadFragment : Fragment() {
             binding.retryButton,
             binding.errorMessageTextView
         )
+
+        uiState.navigate(requireActivity() as NavigateToGame)
     }
 
     override fun onResume() {

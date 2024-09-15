@@ -7,7 +7,7 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <ProgressBar
+    <com.github.andrewmaneshin.unscrambleword.load.view.load.LoadProgressBar
         android:id="@+id/progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

@@ -8,7 +8,6 @@ class LoadViewModelTest {
     @Test
     fun sameFragment() {
         val repository = FakeLoadRepository()
-        repository.expectResult(LoadResult.Success)
         val observable = FakeUiObservable()
         val viewModel = LoadViewModel(
             repository = repository,
@@ -16,7 +15,6 @@ class LoadViewModelTest {
         )
         val fragment = FakeFragment()
 
-        repository.expectResult(LoadResult.Success)
         viewModel.load(isFirstRun = true)
         assertEquals(LoadUiState.Progress, observable.postUiStateCalledList.first())
         assertEquals(1, observable.postUiStateCalledList.size)
@@ -85,15 +83,24 @@ class LoadViewModelTest {
 
         repository.expectResult(LoadResult.Success)
         viewModel.load()
+
+        assertEquals(LoadUiState.Progress, observable.postUiStateCalledList[2])
         assertEquals(3, observable.postUiStateCalledList.size)
         assertEquals(2, repository.loadCalledCount)
-        assertEquals(LoadUiState.Success, newInstanceFragment.statesList[1])
+
+        assertEquals(LoadUiState.Progress, newInstanceFragment.statesList[1])
         assertEquals(2, newInstanceFragment.statesList.size)
+
+        repository.returnResult()
+        assertEquals(LoadUiState.Success, observable.postUiStateCalledList[3])
+        assertEquals(4, observable.postUiStateCalledList.size)
+        assertEquals(LoadUiState.Success, newInstanceFragment.statesList[2])
+        assertEquals(3, newInstanceFragment.statesList.size)
     }
 }
 
 private class FakeFragment : (LoadUiState) -> Unit {
-    val statesList = mutableListOf < LoadUiState()
+    val statesList = mutableListOf<LoadUiState>()
 
     override fun invoke(p1: LoadUiState) {
         statesList.add(p1)
@@ -103,7 +110,7 @@ private class FakeFragment : (LoadUiState) -> Unit {
 private class FakeLoadRepository : LoadRepository {
 
     var loadCalledCount = 0
-    private var loadResult: LoadResult? = null
+    private var loadResult: LoadResult = LoadResult.Success
     private var loadResultCallback: (LoadResult) -> Unit = {}
 
     fun expectResult(loadResult: LoadResult) {
@@ -112,7 +119,7 @@ private class FakeLoadRepository : LoadRepository {
 
     override fun load(resultCallback: (LoadResult) -> Unit) {
         loadCalledCount++
-        resultCallback.invoke(loadResult)
+        loadResultCallback = resultCallback
     }
 
     fun returnResult() {
@@ -131,7 +138,7 @@ private class FakeUiObservable : UiObservable {
         registerCalledCount++
         observerCached = observer
         if (uiStateCached != null) {
-            observerCached!!.invoke(uiStateCached)
+            observerCached!!.invoke(uiStateCached!!)
             uiStateCached = null
         }
     }
@@ -145,7 +152,7 @@ private class FakeUiObservable : UiObservable {
 
     val postUiStateCalledList = mutableListOf<LoadUiState>()
 
-    override fun postUiSate(uiState: LoadUiState) {
+    override fun postUiState(uiState: LoadUiState) {
         postUiStateCalledList.add(uiState)
         if (observerCached == null) {
             uiStateCached = uiState

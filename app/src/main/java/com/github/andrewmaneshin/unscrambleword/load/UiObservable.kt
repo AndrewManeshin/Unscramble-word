@@ -6,7 +6,7 @@ interface UiObservable {
 
     fun unregister()
 
-    fun postUiSate(uiState: LoadUiState)
+    fun postUiState(uiState: LoadUiState)
 
     class Base : UiObservable {
 
@@ -16,7 +16,7 @@ interface UiObservable {
         override fun register(observer: (LoadUiState) -> Unit) {
             observerCached = observer
             if (uiStateCached != null) {
-                observerCached!!.invoke(uiStateCached)
+                observerCached!!.invoke(uiStateCached!!)
                 uiStateCached = null
             }
         }
@@ -25,7 +25,7 @@ interface UiObservable {
             observerCached = null
         }
 
-        override fun postUiSate(uiState: LoadUiState) {
+        override fun postUiState(uiState: LoadUiState) {
             if (observerCached == null) {
                 uiStateCached = uiState
             } else {

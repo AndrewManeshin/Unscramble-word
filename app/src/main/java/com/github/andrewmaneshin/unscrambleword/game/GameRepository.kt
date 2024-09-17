@@ -1,8 +1,8 @@
 package com.github.andrewmaneshin.unscrambleword.game
 
 import com.github.andrewmaneshin.unscrambleword.IntCache
-import com.github.andrewmaneshin.unscrambleword.load.ParseWords
-import com.github.andrewmaneshin.unscrambleword.load.StringCache
+import com.github.andrewmaneshin.unscrambleword.load.data.ParseWords
+import com.github.andrewmaneshin.unscrambleword.load.data.StringCache
 
 interface GameRepository {
 
@@ -18,7 +18,7 @@ interface GameRepository {
         private val incorrects: IntCache,
         private val index: IntCache,
         private val shuffleStrategy: ShuffleStrategy,
-        private val originalList: List<String>
+        private val originalList: Array<String>
     ) : GameRepository {
 
         constructor(
@@ -29,7 +29,7 @@ interface GameRepository {
             dataCache: StringCache,
             parseWords: ParseWords
         ) : this(
-            corrects, incorrects, index, shuffleStrategy, parseWords.parse(dataCache.read()).words
+            corrects, incorrects, index, shuffleStrategy, parseWords.parse(dataCache.read())
         )
 
         //        private val originalList = listOf("android", "develop")

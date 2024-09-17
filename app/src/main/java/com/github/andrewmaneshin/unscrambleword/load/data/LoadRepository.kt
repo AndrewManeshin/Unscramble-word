@@ -19,9 +19,8 @@ interface LoadRepository {
             val connection = URL(url).openConnection() as HttpURLConnection
             try {
                 val data = connection.inputStream.bufferedReader().use { it.readText() }
-                val response = parseWords.parse(data)
-                val list = response.words
-                if (list.isEmpty()) {
+                val array = parseWords.parse(data)
+                if (array.isEmpty()) {
                     resultCallback.invoke(LoadResult.Error("Empty data, try again later"))
                 } else {
                     dataCache.save(data)

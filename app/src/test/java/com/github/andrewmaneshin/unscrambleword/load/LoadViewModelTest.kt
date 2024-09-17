@@ -1,5 +1,10 @@
 package com.github.andrewmaneshin.unscrambleword.load
 
+import com.github.andrewmaneshin.unscrambleword.load.data.LoadRepository
+import com.github.andrewmaneshin.unscrambleword.load.data.LoadResult
+import com.github.andrewmaneshin.unscrambleword.load.presentation.LoadUiState
+import com.github.andrewmaneshin.unscrambleword.load.presentation.LoadViewModel
+import com.github.andrewmaneshin.unscrambleword.load.presentation.UiObservable
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

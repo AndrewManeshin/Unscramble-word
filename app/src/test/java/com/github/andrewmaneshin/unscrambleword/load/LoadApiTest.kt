@@ -21,9 +21,8 @@ class LoadApiTest {
             val data = connection.inputStream.bufferedReader().use { it.readText() }
             assertTrue(data.isNotEmpty())
 
-            val response = gson.fromJson(data, Response::class.java)
-            val list = response.words
-            assertEquals(5, list.size)
+            val array = gson.fromJson(data, Array<String>::class.java) ?: arrayOf()
+            assertEquals(5, array.size)
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {

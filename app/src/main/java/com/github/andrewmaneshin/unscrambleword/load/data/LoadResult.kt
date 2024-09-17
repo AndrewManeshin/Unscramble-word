@@ -1,4 +1,4 @@
-package com.github.andrewmaneshin.unscrambleword.load
+package com.github.andrewmaneshin.unscrambleword.load.data
 
 interface LoadResult {
 

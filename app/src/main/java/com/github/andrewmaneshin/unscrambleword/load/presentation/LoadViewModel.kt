@@ -1,6 +1,7 @@
-package com.github.andrewmaneshin.unscrambleword.load
+package com.github.andrewmaneshin.unscrambleword.load.presentation
 
 import com.github.andrewmaneshin.unscrambleword.MyViewModel
+import com.github.andrewmaneshin.unscrambleword.load.data.LoadRepository
 
 class LoadViewModel(
     private val repository: LoadRepository,

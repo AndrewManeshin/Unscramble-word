@@ -2,6 +2,7 @@ package com.github.andrewmaneshin.unscrambleword.di
 
 import com.github.andrewmaneshin.unscrambleword.MyViewModel
 import com.github.andrewmaneshin.unscrambleword.game.di.ProvideGameViewModel
+import com.github.andrewmaneshin.unscrambleword.load.di.ProvideLoadViewModel
 import com.github.andrewmaneshin.unscrambleword.stats.di.ProvideGameOverViewModel
 
 interface ProvideViewModel {
@@ -13,6 +14,7 @@ interface ProvideViewModel {
 
         init {
             chain = Error()
+            chain = ProvideLoadViewModel(core, chain)
             chain = ProvideGameViewModel(core, chain)
             chain = ProvideGameOverViewModel(core, chain)
         }

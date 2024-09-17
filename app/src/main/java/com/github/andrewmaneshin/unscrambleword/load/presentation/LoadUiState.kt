@@ -1,4 +1,4 @@
-package com.github.andrewmaneshin.unscrambleword.load
+package com.github.andrewmaneshin.unscrambleword.load.presentation
 
 import com.github.andrewmaneshin.unscrambleword.R
 import com.github.andrewmaneshin.unscrambleword.game.NavigateToGame

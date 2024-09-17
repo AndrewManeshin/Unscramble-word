@@ -1,4 +1,4 @@
-package com.github.andrewmaneshin.unscrambleword.load
+package com.github.andrewmaneshin.unscrambleword.load.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -44,7 +44,8 @@ class LoadFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = (requireActivity() as ProvideViewModel).makeViewModel(LoadViewModel::class.java)
+        viewModel =
+            (requireActivity().application as ProvideViewModel).makeViewModel(LoadViewModel::class.java)
 
         binding.retryButton.setOnClickListener {
             viewModel.load()

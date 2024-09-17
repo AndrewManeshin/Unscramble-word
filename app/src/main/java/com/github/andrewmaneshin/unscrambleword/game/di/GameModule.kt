@@ -6,6 +6,8 @@ import com.github.andrewmaneshin.unscrambleword.di.Module
 import com.github.andrewmaneshin.unscrambleword.game.GameRepository
 import com.github.andrewmaneshin.unscrambleword.game.GameViewModel
 import com.github.andrewmaneshin.unscrambleword.game.ShuffleStrategy
+import com.github.andrewmaneshin.unscrambleword.load.data.ParseWords
+import com.github.andrewmaneshin.unscrambleword.load.data.StringCache
 
 class GameModule(private val core: Core) : Module<GameViewModel> {
 
@@ -19,7 +21,9 @@ class GameModule(private val core: Core) : Module<GameViewModel> {
                 corrects,
                 incorrects,
                 IntCache.Base(core.sharedPreferences, "indexKey", 0),
-                ShuffleStrategy.Reverse()
+                ShuffleStrategy.Reverse(),
+                StringCache.Base(core.sharedPreferences, "response_data", ""),
+                ParseWords.Base(core.gson)
             )
         )
     }

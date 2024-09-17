@@ -1,6 +1,7 @@
 package com.github.andrewmaneshin.unscrambleword
 
 import android.app.Application
+import android.os.StrictMode
 import com.github.andrewmaneshin.unscrambleword.di.ClearViewModel
 import com.github.andrewmaneshin.unscrambleword.di.Core
 import com.github.andrewmaneshin.unscrambleword.di.ManageViewModels
@@ -11,6 +12,10 @@ class UGApp : Application(), ProvideViewModel {
     private lateinit var factory: ManageViewModels
 
     override fun onCreate() {
+        StrictMode.setThreadPolicy(
+            StrictMode.ThreadPolicy.Builder().permitAll().build()
+        )
+
         super.onCreate()
         val clearViewModel = object : ClearViewModel {
             override fun clear(clasz: Class<out MyViewModel>) {

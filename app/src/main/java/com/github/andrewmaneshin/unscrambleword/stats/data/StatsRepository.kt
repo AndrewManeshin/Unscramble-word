@@ -1,4 +1,4 @@
-package com.github.andrewmaneshin.unscrambleword.stats
+package com.github.andrewmaneshin.unscrambleword.stats.data
 
 import com.github.andrewmaneshin.unscrambleword.IntCache
 

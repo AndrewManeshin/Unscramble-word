@@ -1,7 +1,7 @@
 package com.github.andrewmaneshin.unscrambleword.load.presentation
 
 import com.github.andrewmaneshin.unscrambleword.R
-import com.github.andrewmaneshin.unscrambleword.game.NavigateToGame
+import com.github.andrewmaneshin.unscrambleword.game.presentation.NavigateToGame
 import com.github.andrewmaneshin.unscrambleword.load.view.error.ErrorMessageUiState
 import com.github.andrewmaneshin.unscrambleword.load.view.error.UpdateErrorMessage
 import com.github.andrewmaneshin.unscrambleword.view.visibilitybutton.UpdateVisibility

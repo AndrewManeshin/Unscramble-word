@@ -1,4 +1,4 @@
-package com.github.andrewmaneshin.unscrambleword.game
+package com.github.andrewmaneshin.unscrambleword.game.data
 
 import com.github.andrewmaneshin.unscrambleword.IntCache
 import com.github.andrewmaneshin.unscrambleword.load.data.ParseWords
@@ -32,7 +32,6 @@ interface GameRepository {
             corrects, incorrects, index, shuffleStrategy, parseWords.parse(dataCache.read())
         )
 
-        //        private val originalList = listOf("android", "develop")
         private val shuffledList = originalList.map { shuffleStrategy.shuffle(it) }
 
         override fun scrambledWord(): String = shuffledList[index.read()]

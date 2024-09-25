@@ -3,9 +3,9 @@ package com.github.andrewmaneshin.unscrambleword.game.di
 import com.github.andrewmaneshin.unscrambleword.IntCache
 import com.github.andrewmaneshin.unscrambleword.di.Core
 import com.github.andrewmaneshin.unscrambleword.di.Module
-import com.github.andrewmaneshin.unscrambleword.game.GameRepository
-import com.github.andrewmaneshin.unscrambleword.game.GameViewModel
-import com.github.andrewmaneshin.unscrambleword.game.ShuffleStrategy
+import com.github.andrewmaneshin.unscrambleword.game.data.GameRepository
+import com.github.andrewmaneshin.unscrambleword.game.data.ShuffleStrategy
+import com.github.andrewmaneshin.unscrambleword.game.presentation.GameViewModel
 import com.github.andrewmaneshin.unscrambleword.load.data.ParseWords
 import com.github.andrewmaneshin.unscrambleword.load.data.StringCache
 

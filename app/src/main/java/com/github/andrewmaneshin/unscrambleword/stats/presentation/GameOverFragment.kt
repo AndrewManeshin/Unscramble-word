@@ -1,4 +1,4 @@
-package com.github.andrewmaneshin.unscrambleword.stats
+package com.github.andrewmaneshin.unscrambleword.stats.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.github.andrewmaneshin.unscrambleword.databinding.FragmentGameOverBinding
 import com.github.andrewmaneshin.unscrambleword.di.ProvideViewModel
-import com.github.andrewmaneshin.unscrambleword.game.NavigateToGame
+import com.github.andrewmaneshin.unscrambleword.load.presentation.NavigateToLoad
 
 class GameOverFragment : Fragment() {
 
@@ -32,7 +32,7 @@ class GameOverFragment : Fragment() {
 
         binding.newGameButton.setOnClickListener {
             viewModel.clear()
-            (requireActivity() as NavigateToGame).navigateToGame()
+            (requireActivity() as NavigateToLoad).navigateToLoad()
         }
         val uiState = viewModel.init(savedInstanceState == null)
         binding.statsTextView.updateUiState(uiState)

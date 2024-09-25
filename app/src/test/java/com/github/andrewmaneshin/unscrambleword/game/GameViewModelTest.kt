@@ -2,6 +2,9 @@ package com.github.andrewmaneshin.unscrambleword.game
 
 import com.github.andrewmaneshin.unscrambleword.MyViewModel
 import com.github.andrewmaneshin.unscrambleword.di.ClearViewModel
+import com.github.andrewmaneshin.unscrambleword.game.data.GameRepository
+import com.github.andrewmaneshin.unscrambleword.game.presentation.GameUiState
+import com.github.andrewmaneshin.unscrambleword.game.presentation.GameViewModel
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test

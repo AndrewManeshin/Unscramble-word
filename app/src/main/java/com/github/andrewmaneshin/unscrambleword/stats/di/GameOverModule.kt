@@ -3,8 +3,8 @@ package com.github.andrewmaneshin.unscrambleword.stats.di
 import com.github.andrewmaneshin.unscrambleword.IntCache
 import com.github.andrewmaneshin.unscrambleword.di.Core
 import com.github.andrewmaneshin.unscrambleword.di.Module
-import com.github.andrewmaneshin.unscrambleword.stats.GameOverViewModel
-import com.github.andrewmaneshin.unscrambleword.stats.StatsRepository
+import com.github.andrewmaneshin.unscrambleword.stats.data.StatsRepository
+import com.github.andrewmaneshin.unscrambleword.stats.presentation.GameOverViewModel
 
 class GameOverModule(private val core: Core) : Module<GameOverViewModel> {
 

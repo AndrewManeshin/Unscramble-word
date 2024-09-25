@@ -1,11 +1,11 @@
-package com.github.andrewmaneshin.unscrambleword.game
+package com.github.andrewmaneshin.unscrambleword.game.presentation
 
 import com.github.andrewmaneshin.unscrambleword.game.view.check.CheckUiState
 import com.github.andrewmaneshin.unscrambleword.game.view.check.UpdateCheckButton
 import com.github.andrewmaneshin.unscrambleword.game.view.input.InputUiState
 import com.github.andrewmaneshin.unscrambleword.game.view.input.UpdateInput
 import com.github.andrewmaneshin.unscrambleword.game.view.scrambleword.UpdateText
-import com.github.andrewmaneshin.unscrambleword.stats.NavigateToGameOver
+import com.github.andrewmaneshin.unscrambleword.stats.presentation.NavigateToGameOver
 import com.github.andrewmaneshin.unscrambleword.view.visibilitybutton.UpdateVisibility
 import com.github.andrewmaneshin.unscrambleword.view.visibilitybutton.VisibilityUiState
 

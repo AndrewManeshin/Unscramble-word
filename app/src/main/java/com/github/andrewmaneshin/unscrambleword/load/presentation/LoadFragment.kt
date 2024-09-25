@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.github.andrewmaneshin.unscrambleword.databinding.FragmentLoadBinding
 import com.github.andrewmaneshin.unscrambleword.di.ProvideViewModel
-import com.github.andrewmaneshin.unscrambleword.game.NavigateToGame
+import com.github.andrewmaneshin.unscrambleword.game.presentation.NavigateToGame
 
 class LoadFragment : Fragment() {
 

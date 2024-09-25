@@ -1,8 +1,8 @@
-package com.github.andrewmaneshin.unscrambleword.game
+package com.github.andrewmaneshin.unscrambleword.game.presentation
 
 import com.github.andrewmaneshin.unscrambleword.MyViewModel
 import com.github.andrewmaneshin.unscrambleword.di.ClearViewModel
-import com.github.andrewmaneshin.unscrambleword.stats.GameOverViewModel
+import com.github.andrewmaneshin.unscrambleword.game.data.GameRepository
 
 class GameViewModel(
     private val clearViewModel: ClearViewModel,
@@ -13,7 +13,7 @@ class GameViewModel(
         repository.next()
         return if (repository.isLastWord()) {
             repository.clear()
-            clearViewModel.clear(GameOverViewModel::class.java)
+            clearViewModel.clear(GameViewModel::class.java)
             GameUiState.Finish
         } else
             init()

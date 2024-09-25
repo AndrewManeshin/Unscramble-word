@@ -1,7 +1,8 @@
-package com.github.andrewmaneshin.unscrambleword.stats
+package com.github.andrewmaneshin.unscrambleword.stats.presentation
 
 import com.github.andrewmaneshin.unscrambleword.MyViewModel
 import com.github.andrewmaneshin.unscrambleword.di.ClearViewModel
+import com.github.andrewmaneshin.unscrambleword.stats.data.StatsRepository
 import com.github.andrewmaneshin.unscrambleword.stats.view.stats.StatsUiState
 
 class GameOverViewModel(

@@ -3,6 +3,8 @@ package com.github.andrewmaneshin.unscrambleword.di
 import com.github.andrewmaneshin.unscrambleword.MyViewModel
 
 interface ManageViewModels : ProvideViewModel, ClearViewModel {
+
+    @Suppress("UNCHECKED_CAST")
     class Factory(
         private val make: ProvideViewModel.Make
     ) : ManageViewModels {

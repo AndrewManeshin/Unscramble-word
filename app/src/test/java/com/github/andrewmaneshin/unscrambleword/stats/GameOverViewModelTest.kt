@@ -2,6 +2,8 @@ package com.github.andrewmaneshin.unscrambleword.stats
 
 import com.github.andrewmaneshin.unscrambleword.MyViewModel
 import com.github.andrewmaneshin.unscrambleword.di.ClearViewModel
+import com.github.andrewmaneshin.unscrambleword.stats.data.StatsRepository
+import com.github.andrewmaneshin.unscrambleword.stats.presentation.GameOverViewModel
 import com.github.andrewmaneshin.unscrambleword.stats.view.stats.StatsUiState
 import org.junit.Assert.assertEquals
 import org.junit.Test

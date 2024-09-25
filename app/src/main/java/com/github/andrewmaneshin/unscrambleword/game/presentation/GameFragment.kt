@@ -1,4 +1,4 @@
-package com.github.andrewmaneshin.unscrambleword.game
+package com.github.andrewmaneshin.unscrambleword.game.presentation
 
 import android.os.Bundle
 import android.text.Editable
@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.github.andrewmaneshin.unscrambleword.databinding.FragmentGameBinding
 import com.github.andrewmaneshin.unscrambleword.di.ProvideViewModel
-import com.github.andrewmaneshin.unscrambleword.stats.NavigateToGameOver
+import com.github.andrewmaneshin.unscrambleword.stats.presentation.NavigateToGameOver
 
 class GameFragment : Fragment() {
 

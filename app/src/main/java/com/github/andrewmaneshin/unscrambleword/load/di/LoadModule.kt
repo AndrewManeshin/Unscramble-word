@@ -1,5 +1,6 @@
 package com.github.andrewmaneshin.unscrambleword.load.di
 
+import com.github.andrewmaneshin.unscrambleword.RunAsync
 import com.github.andrewmaneshin.unscrambleword.di.Core
 import com.github.andrewmaneshin.unscrambleword.di.Module
 import com.github.andrewmaneshin.unscrambleword.load.data.LoadRepository
@@ -15,6 +16,7 @@ class LoadModule(private val core: Core) : Module<LoadViewModel> {
             ParseWords.Base(core.gson),
             StringCache.Base(core.sharedPreferences, "response_data", "")
         ),
-        UiObservable.Base()
+        UiObservable.Base(),
+        RunAsync.Base()
     )
 }

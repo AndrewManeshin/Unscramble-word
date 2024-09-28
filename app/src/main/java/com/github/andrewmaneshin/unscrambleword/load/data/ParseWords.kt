@@ -4,13 +4,20 @@ import com.google.gson.Gson
 
 interface ParseWords {
 
-    fun parse(source: String): Array<String>
+    fun parse(source: String): WordsResponse
+
+    fun toString(data: Any): String
 
     class Base(
         private val gson: Gson
     ) : ParseWords {
-        override fun parse(source: String): Array<String> {
-            return gson.fromJson(source, Array<String>::class.java)
+
+        override fun parse(source: String): WordsResponse {
+            return gson.fromJson(source, WordsResponse::class.java)
+        }
+
+        override fun toString(data: Any): String {
+            return gson.toJson(data)
         }
     }
 }

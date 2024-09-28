@@ -29,7 +29,11 @@ interface GameRepository {
             dataCache: StringCache,
             parseWords: ParseWords
         ) : this(
-            corrects, incorrects, index, shuffleStrategy, parseWords.parse(dataCache.read())
+            corrects,
+            incorrects,
+            index,
+            shuffleStrategy,
+            parseWords.parse(dataCache.read()).wordsList
         )
 
         private val shuffledList = originalList.map { shuffleStrategy.shuffle(it) }

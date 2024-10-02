@@ -43,7 +43,8 @@ class LoadModule(private val core: Core) : Module<LoadViewModel> {
                 StringCache.Base(core.sharedPreferences, "response_data", defaultResponse)
             ),
             UiObservable.Base(),
-            RunAsync.Base()
+            RunAsync.Base(),
+            core.clearViewModel
         )
     }
 }

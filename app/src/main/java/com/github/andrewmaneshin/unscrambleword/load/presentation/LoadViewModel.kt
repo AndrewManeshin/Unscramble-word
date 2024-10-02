@@ -2,6 +2,7 @@ package com.github.andrewmaneshin.unscrambleword.load.presentation
 
 import com.github.andrewmaneshin.unscrambleword.MyViewModel
 import com.github.andrewmaneshin.unscrambleword.RunAsync
+import com.github.andrewmaneshin.unscrambleword.di.ClearViewModel
 import com.github.andrewmaneshin.unscrambleword.load.data.LoadRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -10,7 +11,8 @@ import kotlinx.coroutines.SupervisorJob
 class LoadViewModel(
     private val repository: LoadRepository,
     private val observable: UiObservable,
-    private val runAsync: RunAsync
+    private val runAsync: RunAsync,
+    private val clearViewModel: ClearViewModel
 ) : MyViewModel {
 
     private val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
@@ -23,6 +25,7 @@ class LoadViewModel(
                 {
                     val result = repository.load()
                     if (result.isSuccessful()) {
+                        clearViewModel.clear(LoadViewModel::class.java)
                         LoadUiState.Success
                     }
                     else

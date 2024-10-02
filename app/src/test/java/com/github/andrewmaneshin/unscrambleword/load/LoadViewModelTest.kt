@@ -1,5 +1,6 @@
 package com.github.andrewmaneshin.unscrambleword.load
 
+import com.github.andrewmaneshin.unscrambleword.FakeClearViewModel
 import com.github.andrewmaneshin.unscrambleword.RunAsync
 import com.github.andrewmaneshin.unscrambleword.load.data.LoadRepository
 import com.github.andrewmaneshin.unscrambleword.load.data.LoadResult
@@ -29,7 +30,8 @@ class LoadViewModelTest {
         viewModel = LoadViewModel(
             repository = repository,
             observable = observable,
-            runAsync = runAsync
+            runAsync = runAsync,
+            clearViewModel = FakeClearViewModel()
         )
         fragment = FakeFragment()
     }

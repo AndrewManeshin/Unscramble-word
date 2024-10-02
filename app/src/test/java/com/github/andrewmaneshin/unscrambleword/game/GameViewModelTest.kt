@@ -1,7 +1,6 @@
 package com.github.andrewmaneshin.unscrambleword.game
 
-import com.github.andrewmaneshin.unscrambleword.MyViewModel
-import com.github.andrewmaneshin.unscrambleword.di.ClearViewModel
+import com.github.andrewmaneshin.unscrambleword.FakeClearViewModel
 import com.github.andrewmaneshin.unscrambleword.game.data.GameRepository
 import com.github.andrewmaneshin.unscrambleword.game.presentation.GameUiState
 import com.github.andrewmaneshin.unscrambleword.game.presentation.GameViewModel
@@ -148,6 +147,3 @@ private class FakeGameRepository : GameRepository {
     override fun clear() = Unit
 }
 
-private class FakeClearViewModel : ClearViewModel {
-    override fun clear(clasz: Class<out MyViewModel>) = Unit
-}

@@ -2,7 +2,7 @@ package com.github.andrewmaneshin.unscrambleword.load.data
 
 interface LoadRepository {
 
-    fun load(): LoadResult
+    suspend fun load(): LoadResult
 
     class Base(
         private val service: WordService,
@@ -10,7 +10,7 @@ interface LoadRepository {
         private val dataCache: StringCache
     ) : LoadRepository {
 
-        override fun load(): LoadResult {
+        override suspend fun load(): LoadResult {
             try {
                 val result = service.words().execute()
                 if (result.isSuccessful) {

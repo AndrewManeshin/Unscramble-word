@@ -6,6 +6,8 @@ import com.github.andrewmaneshin.unscrambleword.load.data.LoadResult
 import com.github.andrewmaneshin.unscrambleword.load.presentation.LoadUiState
 import com.github.andrewmaneshin.unscrambleword.load.presentation.LoadViewModel
 import com.github.andrewmaneshin.unscrambleword.load.presentation.UiObservable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -128,7 +130,7 @@ private class FakeLoadRepository : LoadRepository {
         this.loadResult = loadResult
     }
 
-    override fun load(): LoadResult {
+    override suspend fun load(): LoadResult {
         loadCalledCount++
         return loadResult
     }
@@ -176,7 +178,11 @@ private class FakeRunAsync : RunAsync {
     private lateinit var result: Any
     private lateinit var ui: (Any) -> Unit
 
-    override fun <T : Any> handleAsync(heavyOperation: () -> T, uiUpdate: (T) -> Unit) {
+    override fun <T : Any> handleAsync(
+        coroutineScope: CoroutineScope,
+        heavyOperation: suspend () -> T,
+        uiUpdate: (T) -> Unit
+    ) = runBlocking {
         result = heavyOperation.invoke()
         ui = uiUpdate as (Any) -> Unit
     }

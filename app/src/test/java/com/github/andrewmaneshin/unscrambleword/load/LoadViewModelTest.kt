@@ -18,6 +18,7 @@ class LoadViewModelTest {
     private lateinit var repository: FakeLoadRepository
     private lateinit var observable: FakeUiObservable
     private lateinit var runAsync: FakeRunAsync
+    private lateinit var clearViewModel: FakeClearViewModel
     private lateinit var viewModel: LoadViewModel
     private lateinit var fragment: FakeFragment
 
@@ -27,11 +28,12 @@ class LoadViewModelTest {
         repository = FakeLoadRepository()
         observable = FakeUiObservable()
         runAsync = FakeRunAsync()
+        clearViewModel = FakeClearViewModel()
         viewModel = LoadViewModel(
             repository = repository,
             observable = observable,
             runAsync = runAsync,
-            clearViewModel = FakeClearViewModel()
+            clearViewModel = clearViewModel
         )
         fragment = FakeFragment()
     }
@@ -54,6 +56,7 @@ class LoadViewModelTest {
         assertEquals(2, observable.postUiStateCalledList.size)
         assertEquals(LoadUiState.Success, fragment.statesList[1])
         assertEquals(2, fragment.statesList.size)
+        clearViewModel.assertActualCalled(LoadViewModel::class.java)
     }
 
     @Test
@@ -112,6 +115,7 @@ class LoadViewModelTest {
         assertEquals(4, observable.postUiStateCalledList.size)
         assertEquals(LoadUiState.Success, newInstanceFragment.statesList[2])
         assertEquals(3, newInstanceFragment.statesList.size)
+        clearViewModel.assertActualCalled(LoadViewModel::class.java)
     }
 }
 

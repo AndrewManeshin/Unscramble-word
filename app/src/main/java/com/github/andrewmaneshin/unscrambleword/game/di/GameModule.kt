@@ -17,14 +17,23 @@ class GameModule(private val core: Core) : Module<GameViewModel> {
 
         return GameViewModel(
             core.clearViewModel,
-            GameRepository.Base(
-                corrects,
-                incorrects,
-                IntCache.Base(core.sharedPreferences, "indexKey", 0),
-                ShuffleStrategy.Reverse(),
-                StringCache.Base(core.sharedPreferences, "response_data", ""),
-                ParseWords.Base(core.gson)
-            )
+            if (core.runUiTest)
+                GameRepository.Base(
+                    corrects,
+                    incorrects,
+                    IntCache.Base(core.sharedPreferences, "indexKey", 0),
+                    ShuffleStrategy.Reverse(),
+                    arrayOf("android", "develop")
+                )
+            else
+                GameRepository.Base(
+                    corrects,
+                    incorrects,
+                    IntCache.Base(core.sharedPreferences, "indexKey", 0),
+                    ShuffleStrategy.Base(),
+                    StringCache.Base(core.sharedPreferences, "response_data", ""),
+                    ParseWords.Base(core.gson)
+                )
         )
     }
 }

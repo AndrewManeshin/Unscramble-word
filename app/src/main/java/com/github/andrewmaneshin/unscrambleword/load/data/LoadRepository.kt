@@ -1,5 +1,7 @@
 package com.github.andrewmaneshin.unscrambleword.load.data
 
+import kotlinx.coroutines.delay
+
 interface LoadRepository {
 
     suspend fun load(): LoadResult
@@ -83,6 +85,19 @@ interface LoadRepository {
 
                 else -> "Unknown Status Code"
             }
+        }
+    }
+
+    class Fake : LoadRepository {
+
+        private var count = 0
+
+        override suspend fun load(): LoadResult {
+            delay(2000)
+            return if (count++ == 0)
+                LoadResult.Error("")
+            else
+                LoadResult.Success
         }
     }
 }

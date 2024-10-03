@@ -1,13 +1,15 @@
 package com.github.andrewmaneshin.unscrambleword.load
 
 import android.view.View
-import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
+import com.github.andrewmaneshin.unscrambleword.R
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
@@ -23,7 +25,7 @@ class ErrorMessageUi(
             withId(id),
             containerIdMatcher,
             containerClassTypeMatcher,
-            isAssignableFrom(ProgressBar::class.java)
+            isAssignableFrom(TextView::class.java)
         )
     )
 
@@ -32,7 +34,7 @@ class ErrorMessageUi(
     }
 
     fun assertVisible() {
-        interaction.check(matches(isDisplayed()))
+        interaction.check(matches(allOf(isDisplayed(), withText(R.string.no_internet_connection))))
     }
 
     fun waitTillVisible() {

@@ -37,11 +37,14 @@ class LoadModule(private val core: Core) : Module<LoadViewModel> {
             .build()
 
         return LoadViewModel(
-            LoadRepository.Base(
-                retrofit.create(WordService::class.java),
-                ParseWords.Base(core.gson),
-                StringCache.Base(core.sharedPreferences, "response_data", defaultResponse)
-            ),
+            if (core.runUiTest)
+                LoadRepository.Fake()
+            else
+                LoadRepository.Base(
+                    retrofit.create(WordService::class.java),
+                    ParseWords.Base(core.gson),
+                    StringCache.Base(core.sharedPreferences, "response_data", defaultResponse)
+                ),
             UiObservable.Base(),
             RunAsync.Base(),
             core.clearViewModel

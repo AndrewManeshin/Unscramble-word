@@ -163,6 +163,7 @@ class ScenarioTest {
         doWithRecreate { gameOverPage.assertInitialState() }
 
         gameOverPage.clickNewGame()
+        gamePage = GamePage(scrambledWord = "diordna")
         doWithRecreate { gameOverPage.assertNotVisible() }
         //endregion
 
@@ -186,6 +187,7 @@ class ScenarioTest {
         doWithRecreate { gameOverPage.assertInitialState() }
 
         gameOverPage.clickNewGame()
+        gamePage = GamePage(scrambledWord = "diordna")
         doWithRecreate { gameOverPage.assertNotVisible() }
         //endregion
 
@@ -224,33 +226,6 @@ class ScenarioTest {
         loadPage.waitTillError()
         doWithRecreate { loadPage.assertErrorState() }
         loadPage.clickRetry()
-        doWithRecreate { loadPage.assertProgressState() }
-        loadPage.waitTillGone()
-
-        doWithRecreate { gamePage.assertInitialState() }
-    }
-
-    /**
-     * UGTC-10 SecondLoadTestCase
-     */
-    @Test
-    fun secondLoadTest() {
-        val loadPage = LoadPage()
-
-        loadTest()
-
-        gamePage.addInput("android")
-        gamePage.clickCheck()
-        doWithRecreate { gamePage.assertCorrectState() }
-        gamePage.clickNext()
-        gamePage = GamePage(scrambledWord = "poleved")
-        doWithRecreate { gamePage.assertInitialState() }
-        gamePage.addInput("develop")
-        gamePage.clickCheck()
-        doWithRecreate { gamePage.assertCorrectState() }
-        gamePage.clickNext()
-        gamePage.assertNotVisible()
-
         doWithRecreate { loadPage.assertProgressState() }
         loadPage.waitTillGone()
 

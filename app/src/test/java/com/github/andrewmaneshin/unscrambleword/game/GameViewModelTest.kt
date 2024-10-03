@@ -11,11 +11,13 @@ import org.junit.Test
 class GameViewModelTest {
 
     private lateinit var viewModel: GameViewModel
+    private lateinit var clearViewModel: FakeClearViewModel
 
     @Before
     fun setup() {
+        clearViewModel = FakeClearViewModel()
         viewModel =
-            GameViewModel(repository = FakeGameRepository(), clearViewModel = FakeClearViewModel())
+            GameViewModel(repository = FakeGameRepository(), clearViewModel = clearViewModel)
     }
 
     /**
@@ -110,6 +112,7 @@ class GameViewModelTest {
         actual = viewModel.next()
         expected = GameUiState.Finish
         assertEquals(expected, actual)
+        clearViewModel.assertActualCalled(GameViewModel::class.java)
 
         actual = viewModel.next()
         expected = GameUiState.Initial("diordna")

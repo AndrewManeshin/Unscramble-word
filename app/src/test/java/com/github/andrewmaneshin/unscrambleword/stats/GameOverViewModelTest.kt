@@ -12,10 +12,14 @@ class GameOverViewModelTest {
     @Test
     fun test() {
         val repository = FakeRepository()
+        val clearViewModel = FakeClearViewModel()
         val viewModel =
-            GameOverViewModel(repository = repository, clearViewModel = FakeClearViewModel())
+            GameOverViewModel(repository = repository, clearViewModel = clearViewModel)
 
         assertEquals(StatsUiState.Base(2, 3), viewModel.init(true))
+
+        viewModel.clear()
+        clearViewModel.assertActualCalled(GameOverViewModel::class.java)
     }
 }
 

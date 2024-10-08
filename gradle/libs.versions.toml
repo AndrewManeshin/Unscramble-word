@@ -12,12 +12,14 @@ loggingInterceptor = "4.11.0"
 material = "1.12.0"
 activity = "1.9.1"
 constraintlayout = "2.1.4"
+orchestrator = "1.4.2"
 retrofit = "2.11.0"
 room = "2.6.1"
 ksp = "2.0.20-1.0.25"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-orchestrator = { module = "androidx.test:orchestrator", version.ref = "orchestrator" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "room" }

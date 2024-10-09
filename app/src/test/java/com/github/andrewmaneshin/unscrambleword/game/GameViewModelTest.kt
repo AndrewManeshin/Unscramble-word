@@ -1,7 +1,10 @@
 package com.github.andrewmaneshin.unscrambleword.game
 
 import com.github.andrewmaneshin.unscrambleword.FakeClearViewModel
+import com.github.andrewmaneshin.unscrambleword.FakeRunAsync
+import com.github.andrewmaneshin.unscrambleword.FakeUiObservable
 import com.github.andrewmaneshin.unscrambleword.game.data.GameRepository
+import com.github.andrewmaneshin.unscrambleword.game.presentation.GameUiObservable
 import com.github.andrewmaneshin.unscrambleword.game.presentation.GameUiState
 import com.github.andrewmaneshin.unscrambleword.game.presentation.GameViewModel
 import org.junit.Assert.assertEquals
@@ -12,12 +15,20 @@ class GameViewModelTest {
 
     private lateinit var viewModel: GameViewModel
     private lateinit var clearViewModel: FakeClearViewModel
+    private lateinit var observable: FakeGameUiObservable
+    private lateinit var runAsync: FakeRunAsync
 
     @Before
     fun setup() {
         clearViewModel = FakeClearViewModel()
-        viewModel =
-            GameViewModel(repository = FakeGameRepository(), clearViewModel = clearViewModel)
+        observable = FakeGameUiObservable.Base()
+        runAsync = FakeRunAsync()
+        viewModel = GameViewModel(
+            repository = FakeGameRepository(),
+            clearViewModel = clearViewModel,
+            uiObservable = observable,
+            runAsync = runAsync
+        )
     }
 
     /**
@@ -25,7 +36,9 @@ class GameViewModelTest {
      */
     @Test
     fun skipTest() {
-        val actual: GameUiState = viewModel.skip()
+        viewModel.skip()
+        runAsync.returnResult()
+        val actual: GameUiState = observable.postUiStateCalledList.last()
         val expected: GameUiState = GameUiState.Initial(scrambledWord = "poleved")
         assertEquals(expected, actual)
     }
@@ -35,11 +48,15 @@ class GameViewModelTest {
      */
     @Test
     fun InsufficientInputTest() {
-        var actual: GameUiState = viewModel.handleUserInput(text = "androi")
+        viewModel.handleUserInput(text = "androi")
+        runAsync.returnResult()
+        var actual: GameUiState = observable.postUiStateCalledList.last()
         var expected: GameUiState = GameUiState.Insufficient
         assertEquals(expected, actual)
 
-        actual = viewModel.handleUserInput(text = "androidd")
+        viewModel.handleUserInput(text = "androidd")
+        runAsync.returnResult()
+        actual = observable.postUiStateCalledList.last()
         expected = GameUiState.Insufficient
         assertEquals(expected, actual)
     }
@@ -49,7 +66,9 @@ class GameViewModelTest {
      */
     @Test
     fun SufficientInputTest() {
-        val actual: GameUiState = viewModel.handleUserInput(text = "androit")
+        viewModel.handleUserInput(text = "androit")
+        runAsync.returnResult()
+        val actual: GameUiState = observable.postUiStateCalledList.last()
         val expected: GameUiState = GameUiState.Sufficient
         assertEquals(expected, actual)
     }
@@ -59,7 +78,9 @@ class GameViewModelTest {
      */
     @Test
     fun IncorrectTest() {
-        val actual: GameUiState = viewModel.check(text = "androit")
+        viewModel.check(text = "androit")
+        runAsync.returnResult()
+        val actual: GameUiState = observable.postUiStateCalledList.last()
         val expected: GameUiState = GameUiState.Incorrect
         assertEquals(expected, actual)
     }
@@ -69,11 +90,15 @@ class GameViewModelTest {
      */
     @Test
     fun SkipAfterIncorrectTest() {
-        var actual: GameUiState = viewModel.check(text = "androit")
+        viewModel.check(text = "androit")
+        runAsync.returnResult()
+        var actual: GameUiState = observable.postUiStateCalledList.last()
         var expected: GameUiState = GameUiState.Incorrect
         assertEquals(expected, actual)
 
-        actual = viewModel.skip()
+        viewModel.skip()
+        runAsync.returnResult()
+        actual = observable.postUiStateCalledList.last()
         expected = GameUiState.Initial(scrambledWord = "poleved")
         assertEquals(expected, actual)
     }
@@ -83,15 +108,21 @@ class GameViewModelTest {
      */
     @Test
     fun CorrectAfterIncorrectTest() {
-        var actual: GameUiState = viewModel.check(text = "androit")
+        viewModel.check(text = "androit")
+        runAsync.returnResult()
+        var actual: GameUiState = observable.postUiStateCalledList.last()
         var expected: GameUiState = GameUiState.Incorrect
         assertEquals(expected, actual)
 
-        actual = viewModel.handleUserInput(text = "androit")
+        viewModel.handleUserInput(text = "androit")
+        runAsync.returnResult()
+        actual = observable.postUiStateCalledList.last()
         expected = GameUiState.Sufficient
         assertEquals(expected, actual)
 
-        actual = viewModel.check("android")
+        viewModel.check("android")
+        runAsync.returnResult()
+        actual = observable.postUiStateCalledList.last()
         expected = GameUiState.Correct
         assertEquals(expected, actual)
     }
@@ -101,23 +132,35 @@ class GameViewModelTest {
      */
     @Test
     fun NextTest() {
-        var actual: GameUiState = viewModel.init()
+        viewModel.init()
+        runAsync.returnResult()
+        var actual: GameUiState = observable.postUiStateCalledList.last()
         var expected: GameUiState = GameUiState.Initial("diordna")
         assertEquals(expected, actual)
 
-        actual = viewModel.next()
+        viewModel.next()
+        runAsync.returnResult()
+        actual = observable.postUiStateCalledList.last()
         expected = GameUiState.Initial("poleved")
         assertEquals(expected, actual)
 
-        actual = viewModel.next()
+        viewModel.next()
+        runAsync.returnResult()
+        actual = observable.postUiStateCalledList.last()
         expected = GameUiState.Finish
         assertEquals(expected, actual)
         clearViewModel.assertActualCalled(GameViewModel::class.java)
 
-        actual = viewModel.next()
+        viewModel.next()
+        runAsync.returnResult()
+        actual = observable.postUiStateCalledList.last()
         expected = GameUiState.Initial("diordna")
         assertEquals(expected, actual)
     }
+}
+
+private interface FakeGameUiObservable : FakeUiObservable<GameUiState>, GameUiObservable {
+    class Base : FakeUiObservable.Abstract<GameUiState>(), FakeGameUiObservable
 }
 
 private class FakeGameRepository : GameRepository {
@@ -127,15 +170,15 @@ private class FakeGameRepository : GameRepository {
     private val originalList = listOf("android", "develop")
     private val scrambledList = originalList.map { it.reversed() }
 
-    override fun scrambledWord(): String = scrambledList[index]
+    override suspend fun scrambledWord(): String = scrambledList[index]
 
-    override fun originalWord(): String = originalList[index]
+    override suspend fun originalWord(): String = originalList[index]
 
     override fun next() {
         if (index == originalList.size) index = 0 else ++index
     }
 
-    override fun check(text: String): Boolean {
+    override suspend fun check(text: String): Boolean {
         return if (originalWord().equals(text, true)) {
             true
         } else {
@@ -147,6 +190,6 @@ private class FakeGameRepository : GameRepository {
         return index == originalList.size
     }
 
-    override fun clear() = Unit
+    override suspend fun clear() = Unit
 }
 

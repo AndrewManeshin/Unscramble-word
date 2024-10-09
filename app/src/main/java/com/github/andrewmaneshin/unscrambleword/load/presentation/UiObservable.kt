@@ -1,19 +1,19 @@
 package com.github.andrewmaneshin.unscrambleword.load.presentation
 
-interface UiObservable {
+interface UiObservable<T : Any> {
 
-    fun register(observer: (LoadUiState) -> Unit)
+    fun register(observer: (T) -> Unit)
 
     fun unregister()
 
-    fun postUiState(uiState: LoadUiState)
+    fun postUiState(uiState: T)
 
-    class Base : UiObservable {
+    abstract class Abstract<T : Any> : UiObservable<T> {
 
-        private var uiStateCached: LoadUiState? = null
-        private var observerCached: ((LoadUiState) -> Unit)? = null
+        private var uiStateCached: T? = null
+        private var observerCached: ((T) -> Unit)? = null
 
-        override fun register(observer: (LoadUiState) -> Unit) {
+        override fun register(observer: (T) -> Unit) {
             observerCached = observer
             if (uiStateCached != null) {
                 observerCached!!.invoke(uiStateCached!!)
@@ -25,7 +25,7 @@ interface UiObservable {
             observerCached = null
         }
 
-        override fun postUiState(uiState: LoadUiState) {
+        override fun postUiState(uiState: T) {
             if (observerCached == null) {
                 uiStateCached = uiState
             } else {

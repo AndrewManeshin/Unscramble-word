@@ -4,39 +4,30 @@ import com.github.andrewmaneshin.unscrambleword.MyViewModel
 import com.github.andrewmaneshin.unscrambleword.RunAsync
 import com.github.andrewmaneshin.unscrambleword.di.ClearViewModel
 import com.github.andrewmaneshin.unscrambleword.load.data.LoadRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 
 class LoadViewModel(
     private val repository: LoadRepository,
-    private val observable: UiObservable,
+    private val uiObservable: LoadUiObservable,
     private val runAsync: RunAsync,
-    private val clearViewModel: ClearViewModel
-) : MyViewModel {
-
-    private val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+    private val clearViewModel: ClearViewModel,
+    private val size: Int
+) : MyViewModel.Abstract<LoadUiState>(uiObservable) {
 
     fun load(isFirstRun: Boolean = true) {
         if (isFirstRun) {
-            observable.postUiState(LoadUiState.Progress)
+            uiObservable.postUiState(LoadUiState.Progress)
             runAsync.handleAsync(
                 viewModelScope,
                 {
-                    val result = repository.load()
+                    val result = repository.load(size)
                     if (result.isSuccessful()) {
                         clearViewModel.clear(LoadViewModel::class.java)
                         LoadUiState.Success
-                    }
-                    else
+                    } else
                         LoadUiState.Error(result.message())
                 }) {
-                observable.postUiState(it)
+                uiObservable.postUiState(it)
             }
         }
     }
-
-    fun startUpdates(observer: (LoadUiState) -> Unit) = observable.register(observer)
-
-    fun stopUpdates() = observable.unregister()
 }

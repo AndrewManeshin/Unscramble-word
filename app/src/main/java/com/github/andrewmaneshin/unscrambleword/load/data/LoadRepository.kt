@@ -1,29 +1,33 @@
 package com.github.andrewmaneshin.unscrambleword.load.data
 
+import com.github.andrewmaneshin.unscrambleword.load.data.cache.WordCache
+import com.github.andrewmaneshin.unscrambleword.load.data.cache.WordsDao
+import com.github.andrewmaneshin.unscrambleword.load.data.cloud.LoadResult
+import com.github.andrewmaneshin.unscrambleword.load.data.cloud.WordService
 import kotlinx.coroutines.delay
 
 interface LoadRepository {
 
-    suspend fun load(): LoadResult
+    suspend fun load(size: Int): LoadResult
 
     class Base(
         private val service: WordService,
-        private val parseWords: ParseWords,
-        private val dataCache: StringCache
+        private val dao: WordsDao
     ) : LoadRepository {
 
-        override suspend fun load(): LoadResult {
+        override suspend fun load(size: Int): LoadResult {
             try {
-                val result = service.words().execute()
+                val result = service.words(size).execute()
                 if (result.isSuccessful) {
                     val body = result.body()!!
                     if (body.status in 200..299) {
                         val list = body.wordsList
                         if (list.isEmpty()) {
-                            return LoadResult.Error("Empty data< try again later")
+                            return LoadResult.Error("Empty data, try again later")
                         } else {
-                            val data = parseWords.toString(body)
-                            dataCache.save(data)
+                            dao.saveWords(body.wordsList.mapIndexed { index, word ->
+                                WordCache(id = index, word = word)
+                            })
                             return LoadResult.Success
                         }
                     } else {
@@ -92,7 +96,7 @@ interface LoadRepository {
 
         private var count = 0
 
-        override suspend fun load(): LoadResult {
+        override suspend fun load(size: Int): LoadResult {
             delay(2000)
             return if (count++ == 0)
                 LoadResult.Error("")

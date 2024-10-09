@@ -1,14 +1,13 @@
 package com.github.andrewmaneshin.unscrambleword.load
 
 import com.github.andrewmaneshin.unscrambleword.FakeClearViewModel
-import com.github.andrewmaneshin.unscrambleword.RunAsync
+import com.github.andrewmaneshin.unscrambleword.FakeRunAsync
+import com.github.andrewmaneshin.unscrambleword.FakeUiObservable
 import com.github.andrewmaneshin.unscrambleword.load.data.LoadRepository
-import com.github.andrewmaneshin.unscrambleword.load.data.LoadResult
+import com.github.andrewmaneshin.unscrambleword.load.data.cloud.LoadResult
+import com.github.andrewmaneshin.unscrambleword.load.presentation.LoadUiObservable
 import com.github.andrewmaneshin.unscrambleword.load.presentation.LoadUiState
 import com.github.andrewmaneshin.unscrambleword.load.presentation.LoadViewModel
-import com.github.andrewmaneshin.unscrambleword.load.presentation.UiObservable
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -16,7 +15,7 @@ import org.junit.Test
 class LoadViewModelTest {
 
     private lateinit var repository: FakeLoadRepository
-    private lateinit var observable: FakeUiObservable
+    private lateinit var observable: FakeLoadUiObservable
     private lateinit var runAsync: FakeRunAsync
     private lateinit var clearViewModel: FakeClearViewModel
     private lateinit var viewModel: LoadViewModel
@@ -26,14 +25,15 @@ class LoadViewModelTest {
     fun setUp() {
         repository = FakeLoadRepository()
         repository = FakeLoadRepository()
-        observable = FakeUiObservable()
+        observable = FakeLoadUiObservable.Base()
         runAsync = FakeRunAsync()
         clearViewModel = FakeClearViewModel()
         viewModel = LoadViewModel(
             repository = repository,
-            observable = observable,
+            uiObservable = observable,
             runAsync = runAsync,
-            clearViewModel = clearViewModel
+            clearViewModel = clearViewModel,
+            2
         )
         fragment = FakeFragment()
     }
@@ -136,64 +136,12 @@ private class FakeLoadRepository : LoadRepository {
         this.loadResult = loadResult
     }
 
-    override suspend fun load(): LoadResult {
+    override suspend fun load(size: Int): LoadResult {
         loadCalledCount++
         return loadResult
     }
 }
 
-private class FakeUiObservable : UiObservable {
-
-    private var uiStateCached: LoadUiState? = null
-    private var observerCached: ((LoadUiState) -> Unit)? = null
-
-    var registerCalledCount = 0
-
-    override fun register(observer: (LoadUiState) -> Unit) {
-        registerCalledCount++
-        observerCached = observer
-        if (uiStateCached != null) {
-            observerCached!!.invoke(uiStateCached!!)
-            uiStateCached = null
-        }
-    }
-
-    var unregisterCalledCount = 0
-
-    override fun unregister() {
-        unregisterCalledCount++
-        observerCached = null
-    }
-
-    val postUiStateCalledList = mutableListOf<LoadUiState>()
-
-    override fun postUiState(uiState: LoadUiState) {
-        postUiStateCalledList.add(uiState)
-        if (observerCached == null) {
-            uiStateCached = uiState
-        } else {
-            observerCached!!.invoke(uiState)
-            uiStateCached = null
-        }
-    }
-}
-
-@Suppress("UNCHECKED_CAST")
-private class FakeRunAsync : RunAsync {
-
-    private lateinit var result: Any
-    private lateinit var ui: (Any) -> Unit
-
-    override fun <T : Any> handleAsync(
-        coroutineScope: CoroutineScope,
-        heavyOperation: suspend () -> T,
-        uiUpdate: (T) -> Unit
-    ) = runBlocking {
-        result = heavyOperation.invoke()
-        ui = uiUpdate as (Any) -> Unit
-    }
-
-    fun returnResult() {
-        ui.invoke(result)
-    }
+private interface FakeLoadUiObservable : FakeUiObservable<LoadUiState>, LoadUiObservable {
+    class Base : FakeUiObservable.Abstract<LoadUiState>(), FakeLoadUiObservable
 }

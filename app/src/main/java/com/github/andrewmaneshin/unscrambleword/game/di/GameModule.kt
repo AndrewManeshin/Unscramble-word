@@ -5,9 +5,8 @@ import com.github.andrewmaneshin.unscrambleword.di.Core
 import com.github.andrewmaneshin.unscrambleword.di.Module
 import com.github.andrewmaneshin.unscrambleword.game.data.GameRepository
 import com.github.andrewmaneshin.unscrambleword.game.data.ShuffleStrategy
+import com.github.andrewmaneshin.unscrambleword.game.presentation.GameUiObservable
 import com.github.andrewmaneshin.unscrambleword.game.presentation.GameViewModel
-import com.github.andrewmaneshin.unscrambleword.load.data.ParseWords
-import com.github.andrewmaneshin.unscrambleword.load.data.StringCache
 
 class GameModule(private val core: Core) : Module<GameViewModel> {
 
@@ -16,14 +15,14 @@ class GameModule(private val core: Core) : Module<GameViewModel> {
         val incorrects = IntCache.Base(core.sharedPreferences, "incorrects", 0)
 
         return GameViewModel(
+            GameUiObservable.Base(),
             core.clearViewModel,
             if (core.runUiTest)
-                GameRepository.Base(
+                GameRepository.Fake(
                     corrects,
                     incorrects,
                     IntCache.Base(core.sharedPreferences, "indexKey", 0),
-                    ShuffleStrategy.Reverse(),
-                    arrayOf("android", "develop")
+                    ShuffleStrategy.Reverse()
                 )
             else
                 GameRepository.Base(
@@ -31,9 +30,11 @@ class GameModule(private val core: Core) : Module<GameViewModel> {
                     incorrects,
                     IntCache.Base(core.sharedPreferences, "indexKey", 0),
                     ShuffleStrategy.Base(),
-                    StringCache.Base(core.sharedPreferences, "response_data", ""),
-                    ParseWords.Base(core.gson)
-                )
+                    core.cacheModule.dao(),
+                    core.cacheModule.clearDatabase(),
+                    core.size
+                ),
+            core.runAsync
         )
     }
 }

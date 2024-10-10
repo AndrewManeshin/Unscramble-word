@@ -10,5 +10,7 @@ data class WordCache(
     @ColumnInfo("id")
     val id: Int,
     @ColumnInfo("word")
-    val word: String
+    val word: String,
+    @ColumnInfo("shuffled_word")
+    val shuffledWord: String
 )

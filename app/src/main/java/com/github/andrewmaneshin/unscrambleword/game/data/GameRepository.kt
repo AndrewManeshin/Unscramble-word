@@ -17,14 +17,12 @@ interface GameRepository {
         private val corrects: IntCache,
         private val incorrects: IntCache,
         private val index: IntCache,
-        private val shuffleStrategy: ShuffleStrategy,
         private val dao: WordsDao,
         private val clearDatabase: ClearDatabase,
         private val size: Int
     ) : GameRepository {
 
-        override suspend fun scrambledWord(): String =
-            shuffleStrategy.shuffle(dao.fetchWord(index.read()).word)
+        override suspend fun scrambledWord(): String = dao.fetchWord(index.read()).shuffledWord
 
         override suspend fun originalWord(): String = dao.fetchWord(index.read()).word
 
@@ -51,11 +49,10 @@ interface GameRepository {
         private val corrects: IntCache,
         private val incorrects: IntCache,
         private val index: IntCache,
-        private val shuffleStrategy: ShuffleStrategy,
         private val originalList: Array<String> = arrayOf("android", "develop")
     ) : GameRepository {
 
-        private val shuffledList = originalList.map { shuffleStrategy.shuffle(it) }
+        private val shuffledList = originalList.map { it.reversed() }
 
         override suspend fun scrambledWord(): String = shuffledList[index.read()]
 

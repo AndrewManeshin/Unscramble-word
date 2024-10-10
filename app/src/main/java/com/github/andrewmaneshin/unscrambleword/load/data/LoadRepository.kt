@@ -1,6 +1,7 @@
 package com.github.andrewmaneshin.unscrambleword.load.data
 
 import com.github.andrewmaneshin.unscrambleword.core.IntCache
+import com.github.andrewmaneshin.unscrambleword.game.data.ShuffleStrategy
 import com.github.andrewmaneshin.unscrambleword.load.data.cache.WordCache
 import com.github.andrewmaneshin.unscrambleword.load.data.cache.WordsDao
 import com.github.andrewmaneshin.unscrambleword.load.data.cloud.LoadResult
@@ -14,7 +15,8 @@ interface LoadRepository {
     class Base(
         private val service: WordService,
         private val dao: WordsDao,
-        private val index: IntCache
+        private val index: IntCache,
+        private val shuffleStrategy: ShuffleStrategy
     ) : LoadRepository {
 
         override suspend fun load(size: Int): LoadResult {
@@ -28,7 +30,7 @@ interface LoadRepository {
                             return LoadResult.Error("Empty data, try again later")
                         } else {
                             dao.saveWords(body.wordsList.mapIndexed { index, word ->
-                                WordCache(id = index, word = word)
+                                WordCache(id = index, word = word, shuffleStrategy.shuffle(word))
                             })
                             index.save(0)
                             return LoadResult.Success

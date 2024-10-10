@@ -7,7 +7,7 @@
     android:gravity="center_vertical"
     android:orientation="vertical"
     android:padding="32dp"
-    tools:context=".MainActivity">
+    tools:context=".main.MainActivity">
 
     <com.github.andrewmaneshin.unscrambleword.game.view.scrambleword.ScrambleWordTextView
         android:id="@+id/scrambledWordTextView"

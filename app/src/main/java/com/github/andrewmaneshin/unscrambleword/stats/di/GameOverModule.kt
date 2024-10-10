@@ -1,6 +1,6 @@
 package com.github.andrewmaneshin.unscrambleword.stats.di
 
-import com.github.andrewmaneshin.unscrambleword.IntCache
+import com.github.andrewmaneshin.unscrambleword.core.IntCache
 import com.github.andrewmaneshin.unscrambleword.di.Core
 import com.github.andrewmaneshin.unscrambleword.di.Module
 import com.github.andrewmaneshin.unscrambleword.stats.data.StatsRepository

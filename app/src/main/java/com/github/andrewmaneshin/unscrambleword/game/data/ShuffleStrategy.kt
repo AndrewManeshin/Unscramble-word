@@ -6,7 +6,7 @@ interface ShuffleStrategy {
 
     fun shuffle(source: String): String
 
-    class Base : ShuffleStrategy {
+    object Base : ShuffleStrategy {
 
         override fun shuffle(source: String): String {
             return source.toCharArray().apply {
@@ -15,7 +15,7 @@ interface ShuffleStrategy {
         }
     }
 
-    class Reverse : ShuffleStrategy {
+    object Reverse : ShuffleStrategy {
 
         override fun shuffle(source: String): String {
             return source.reversed()

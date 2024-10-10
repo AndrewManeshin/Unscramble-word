@@ -1,6 +1,7 @@
 package com.github.andrewmaneshin.unscrambleword.load.di
 
-import com.github.andrewmaneshin.unscrambleword.RunAsync
+import com.github.andrewmaneshin.unscrambleword.core.IntCache
+import com.github.andrewmaneshin.unscrambleword.core.RunAsync
 import com.github.andrewmaneshin.unscrambleword.di.Core
 import com.github.andrewmaneshin.unscrambleword.di.Module
 import com.github.andrewmaneshin.unscrambleword.load.data.LoadRepository
@@ -37,7 +38,8 @@ class LoadModule(private val core: Core) : Module<LoadViewModel> {
             else
                 LoadRepository.Base(
                     retrofit.create(WordService::class.java),
-                    core.cacheModule.dao()
+                    core.cacheModule.dao(),
+                    IntCache.Base(core.sharedPreferences, "index", 0)
                 ),
             LoadUiObservable.Base(),
             RunAsync.Base(),

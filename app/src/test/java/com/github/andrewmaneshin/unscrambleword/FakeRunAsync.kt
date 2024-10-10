@@ -1,5 +1,6 @@
 package com.github.andrewmaneshin.unscrambleword
 
+import com.github.andrewmaneshin.unscrambleword.core.RunAsync
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.runBlocking
 

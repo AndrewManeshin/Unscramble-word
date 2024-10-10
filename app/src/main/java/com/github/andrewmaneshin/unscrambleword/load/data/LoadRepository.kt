@@ -1,5 +1,6 @@
 package com.github.andrewmaneshin.unscrambleword.load.data
 
+import com.github.andrewmaneshin.unscrambleword.core.IntCache
 import com.github.andrewmaneshin.unscrambleword.load.data.cache.WordCache
 import com.github.andrewmaneshin.unscrambleword.load.data.cache.WordsDao
 import com.github.andrewmaneshin.unscrambleword.load.data.cloud.LoadResult
@@ -12,7 +13,8 @@ interface LoadRepository {
 
     class Base(
         private val service: WordService,
-        private val dao: WordsDao
+        private val dao: WordsDao,
+        private val index: IntCache
     ) : LoadRepository {
 
         override suspend fun load(size: Int): LoadResult {
@@ -28,6 +30,7 @@ interface LoadRepository {
                             dao.saveWords(body.wordsList.mapIndexed { index, word ->
                                 WordCache(id = index, word = word)
                             })
+                            index.save(0)
                             return LoadResult.Success
                         }
                     } else {

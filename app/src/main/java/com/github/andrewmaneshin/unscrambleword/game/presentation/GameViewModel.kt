@@ -1,7 +1,7 @@
 package com.github.andrewmaneshin.unscrambleword.game.presentation
 
-import com.github.andrewmaneshin.unscrambleword.MyViewModel
-import com.github.andrewmaneshin.unscrambleword.RunAsync
+import com.github.andrewmaneshin.unscrambleword.core.MyViewModel
+import com.github.andrewmaneshin.unscrambleword.core.RunAsync
 import com.github.andrewmaneshin.unscrambleword.di.ClearViewModel
 import com.github.andrewmaneshin.unscrambleword.game.data.GameRepository
 

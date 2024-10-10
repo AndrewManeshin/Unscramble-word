@@ -1,7 +1,6 @@
 package com.github.andrewmaneshin.unscrambleword.core
 
 import androidx.fragment.app.Fragment
-import com.github.andrewmaneshin.unscrambleword.MyViewModel
 
 abstract class AbstractFragment<UiState : Any, ViewModel : MyViewModel.Async<UiState>> :
     Fragment() {

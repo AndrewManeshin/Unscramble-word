@@ -1,6 +1,6 @@
 package com.github.andrewmaneshin.unscrambleword.game.data
 
-import com.github.andrewmaneshin.unscrambleword.IntCache
+import com.github.andrewmaneshin.unscrambleword.core.IntCache
 import com.github.andrewmaneshin.unscrambleword.load.data.cache.ClearDatabase
 import com.github.andrewmaneshin.unscrambleword.load.data.cache.WordsDao
 
@@ -43,7 +43,6 @@ interface GameRepository {
         override fun isLastWord(): Boolean = index.read() == size
 
         override suspend fun clear() {
-            index.save(0)
             clearDatabase.clear()
         }
     }

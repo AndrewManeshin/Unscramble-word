@@ -67,7 +67,7 @@ class GameFragment : AbstractFragment<GameUiState, GameViewModel>() {
             viewModel.check(text = binding.inputView.text())
         }
 
-        viewModel.init(true)
+        viewModel.init(savedInstanceState == null)
     }
 
     override fun onStart() {

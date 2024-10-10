@@ -1,7 +1,8 @@
 package com.github.andrewmaneshin.unscrambleword.di
 
-import com.github.andrewmaneshin.unscrambleword.MyViewModel
+import com.github.andrewmaneshin.unscrambleword.core.MyViewModel
 
+@Suppress("UNCHECKED_CAST")
 abstract class AbstractProvideViewModel(
     protected val core: Core,
     private val nextChain: ProvideViewModel,

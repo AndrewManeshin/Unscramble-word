@@ -1,4 +1,4 @@
-package com.github.andrewmaneshin.unscrambleword
+package com.github.andrewmaneshin.unscrambleword.core
 
 import com.github.andrewmaneshin.unscrambleword.load.presentation.UiObservable
 import kotlinx.coroutines.CoroutineScope

@@ -1,5 +1,6 @@
 package com.github.andrewmaneshin.unscrambleword
 
+import com.github.andrewmaneshin.unscrambleword.core.MyViewModel
 import com.github.andrewmaneshin.unscrambleword.di.ClearViewModel
 import org.junit.Assert.assertEquals
 

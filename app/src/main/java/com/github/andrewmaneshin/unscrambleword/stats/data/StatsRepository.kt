@@ -1,6 +1,6 @@
 package com.github.andrewmaneshin.unscrambleword.stats.data
 
-import com.github.andrewmaneshin.unscrambleword.IntCache
+import com.github.andrewmaneshin.unscrambleword.core.IntCache
 
 interface StatsRepository {
 

@@ -7,6 +7,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.github.andrewmaneshin.unscrambleword.game.GamePage
 import com.github.andrewmaneshin.unscrambleword.game_over.GameOverPage
 import com.github.andrewmaneshin.unscrambleword.load.LoadPage
+import com.github.andrewmaneshin.unscrambleword.main.MainActivity
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

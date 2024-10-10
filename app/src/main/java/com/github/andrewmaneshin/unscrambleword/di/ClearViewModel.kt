@@ -1,6 +1,6 @@
 package com.github.andrewmaneshin.unscrambleword.di
 
-import com.github.andrewmaneshin.unscrambleword.MyViewModel
+import com.github.andrewmaneshin.unscrambleword.core.MyViewModel
 
 interface ClearViewModel {
 

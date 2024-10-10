@@ -14,11 +14,4 @@ interface ShuffleStrategy {
             }.joinToString("")
         }
     }
-
-    object Reverse : ShuffleStrategy {
-
-        override fun shuffle(source: String): String {
-            return source.reversed()
-        }
-    }
 }

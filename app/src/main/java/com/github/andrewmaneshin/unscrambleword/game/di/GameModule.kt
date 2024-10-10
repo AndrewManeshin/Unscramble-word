@@ -4,7 +4,6 @@ import com.github.andrewmaneshin.unscrambleword.core.IntCache
 import com.github.andrewmaneshin.unscrambleword.di.Core
 import com.github.andrewmaneshin.unscrambleword.di.Module
 import com.github.andrewmaneshin.unscrambleword.game.data.GameRepository
-import com.github.andrewmaneshin.unscrambleword.game.data.ShuffleStrategy
 import com.github.andrewmaneshin.unscrambleword.game.presentation.GameUiObservable
 import com.github.andrewmaneshin.unscrambleword.game.presentation.GameViewModel
 
@@ -21,15 +20,13 @@ class GameModule(private val core: Core) : Module<GameViewModel> {
             GameRepository.Fake(
                 core.correctsCache,
                 core.incorrectsCache,
-                indexCache,
-                ShuffleStrategy.Reverse
+                indexCache
             )
         else
             GameRepository.Base(
                 core.correctsCache,
                 core.incorrectsCache,
                 indexCache,
-                ShuffleStrategy.Base,
                 core.cacheModule.dao(),
                 core.cacheModule.clearDatabase(),
                 core.size

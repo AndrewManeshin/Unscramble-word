@@ -35,13 +35,18 @@ class RoomTest {
 
     @Test
     fun testSaveAndFetch() = runBlocking {
-        dao.saveWords(listOf(WordCache(1, "android"), WordCache(2, "develop")))
+        dao.saveWords(
+            listOf(
+                WordCache(1, "android", "diordna"),
+                WordCache(2, "develop", "poleved")
+            )
+        )
 
-        var expected = WordCache(1, "android")
+        var expected = WordCache(1, "android", "diordna")
         var actual = dao.fetchWord(1)
         assertEquals(expected, actual)
 
-        expected = WordCache(2, "develop")
+        expected = WordCache(2, "develop", "poleved")
         actual = dao.fetchWord(2)
         assertEquals(expected, actual)
     }

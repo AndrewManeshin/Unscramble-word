@@ -4,7 +4,7 @@ import com.github.andrewmaneshin.unscrambleword.FakeClearViewModel
 import com.github.andrewmaneshin.unscrambleword.FakeRunAsync
 import com.github.andrewmaneshin.unscrambleword.FakeUiObservable
 import com.github.andrewmaneshin.unscrambleword.load.data.LoadRepository
-import com.github.andrewmaneshin.unscrambleword.load.data.cloud.LoadResult
+import com.github.andrewmaneshin.unscrambleword.load.data.LoadResult
 import com.github.andrewmaneshin.unscrambleword.load.presentation.LoadUiObservable
 import com.github.andrewmaneshin.unscrambleword.load.presentation.LoadUiState
 import com.github.andrewmaneshin.unscrambleword.load.presentation.LoadViewModel
@@ -30,10 +30,9 @@ class LoadViewModelTest {
         clearViewModel = FakeClearViewModel()
         viewModel = LoadViewModel(
             repository = repository,
-            uiObservable = observable,
+            observable = observable,
             runAsync = runAsync,
-            clearViewModel = clearViewModel,
-            2
+            clearViewModel = clearViewModel
         )
         fragment = FakeFragment()
     }
@@ -136,9 +135,8 @@ private class FakeLoadRepository : LoadRepository {
         this.loadResult = loadResult
     }
 
-    override suspend fun load(size: Int): LoadResult {
+    override suspend fun load() {
         loadCalledCount++
-        return loadResult
     }
 }
 

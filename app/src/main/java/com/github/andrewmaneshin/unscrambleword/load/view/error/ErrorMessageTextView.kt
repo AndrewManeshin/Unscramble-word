@@ -40,6 +40,10 @@ class ErrorMessageTextView : androidx.appcompat.widget.AppCompatTextView, Update
         setText(textResId)
     }
 
+    override fun updateMessage(message: String) {
+        text = message
+    }
+
     override fun updateVisibility(visibility: Int) {
         this.visibility = visibility
     }
@@ -50,6 +54,8 @@ interface UpdateErrorMessage {
     fun update(uiState: ErrorMessageUiState)
 
     fun updateMessage(@StringRes textResId: Int)
+
+    fun updateMessage(message: String)
 
     fun updateVisibility(visibility: Int)
 }

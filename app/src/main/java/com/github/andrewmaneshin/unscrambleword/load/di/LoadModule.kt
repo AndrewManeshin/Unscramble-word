@@ -6,6 +6,7 @@ import com.github.andrewmaneshin.unscrambleword.di.Core
 import com.github.andrewmaneshin.unscrambleword.di.Module
 import com.github.andrewmaneshin.unscrambleword.game.data.ShuffleStrategy
 import com.github.andrewmaneshin.unscrambleword.load.data.LoadRepository
+import com.github.andrewmaneshin.unscrambleword.load.data.cloud.CloudDataSource
 import com.github.andrewmaneshin.unscrambleword.load.data.cloud.WordService
 import com.github.andrewmaneshin.unscrambleword.load.presentation.LoadUiObservable
 import com.github.andrewmaneshin.unscrambleword.load.presentation.LoadViewModel
@@ -38,15 +39,17 @@ class LoadModule(private val core: Core) : Module<LoadViewModel> {
                 LoadRepository.Fake()
             else
                 LoadRepository.Base(
-                    retrofit.create(WordService::class.java),
+                    CloudDataSource.Base(
+                        retrofit.create(WordService::class.java),
+                        core.size
+                    ),
                     core.cacheModule.dao(),
                     IntCache.Base(core.sharedPreferences, "index", 0),
                     ShuffleStrategy.Base
                 ),
             LoadUiObservable.Base(),
             RunAsync.Base(),
-            core.clearViewModel,
-            core.size
+            core.clearViewModel
         )
     }
 }

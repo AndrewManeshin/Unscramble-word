@@ -9,4 +9,5 @@
     <string name="new_game">Start a new game</string>
     <string name="no_internet_connection">No internet connection</string>
     <string name="retry">Try again</string>
+    <string name="service_is_unavailable">Service is unavailable</string>
 </resources>

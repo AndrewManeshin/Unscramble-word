@@ -1,5 +1,6 @@
 package com.github.andrewmaneshin.unscrambleword.load.presentation
 
+import androidx.annotation.StringRes
 import com.github.andrewmaneshin.unscrambleword.R
 import com.github.andrewmaneshin.unscrambleword.game.presentation.NavigateToGame
 import com.github.andrewmaneshin.unscrambleword.load.view.error.ErrorMessageUiState
@@ -36,11 +37,21 @@ interface LoadUiState {
         }
     }
 
-    data class Error(private val message: String) : Abstract(
-        VisibilityUiState.Gone, VisibilityUiState.Visible, ErrorMessageUiState.Show(
-            R.string.no_internet_connection
+    data class ErrorRes(@StringRes private val messageId: Int = R.string.no_internet_connection) :
+        Abstract(
+            VisibilityUiState.Gone,
+            VisibilityUiState.Visible,
+            ErrorMessageUiState.ShowRes(messageId)
         )
-    )
+
+    data class Error(private val message: String) :
+        Abstract(
+            VisibilityUiState.Gone,
+            VisibilityUiState.Visible,
+            ErrorMessageUiState.Show(message)
+        ) {
+
+    }
 
     object Progress :
         Abstract(VisibilityUiState.Visible, VisibilityUiState.Gone, ErrorMessageUiState.Hide)

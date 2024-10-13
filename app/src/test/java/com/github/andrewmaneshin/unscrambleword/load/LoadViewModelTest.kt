@@ -4,7 +4,7 @@ import com.github.andrewmaneshin.unscrambleword.FakeClearViewModel
 import com.github.andrewmaneshin.unscrambleword.FakeRunAsync
 import com.github.andrewmaneshin.unscrambleword.FakeUiObservable
 import com.github.andrewmaneshin.unscrambleword.load.data.LoadRepository
-import com.github.andrewmaneshin.unscrambleword.load.data.LoadResult
+import com.github.andrewmaneshin.unscrambleword.load.data.NoInternetConnectionException
 import com.github.andrewmaneshin.unscrambleword.load.presentation.LoadUiObservable
 import com.github.andrewmaneshin.unscrambleword.load.presentation.LoadUiState
 import com.github.andrewmaneshin.unscrambleword.load.presentation.LoadViewModel
@@ -60,7 +60,7 @@ class LoadViewModelTest {
 
     @Test
     fun recreateActivity() {
-        repository.expectResult(LoadResult.Error(message = "no internet"))
+        repository.expectResult(false)
 
         viewModel.load(isFirstRun = true) //onViewCreated
         assertEquals(LoadUiState.Progress, observable.postUiStateCalledList.first())
@@ -78,7 +78,7 @@ class LoadViewModelTest {
 
         runAsync.returnResult()
         assertEquals(
-            LoadUiState.Error(message = "no internet"),
+            LoadUiState.ErrorRes(),
             observable.postUiStateCalledList[1]
         )
         assertEquals(2, observable.postUiStateCalledList.size)
@@ -94,12 +94,12 @@ class LoadViewModelTest {
         assertEquals(2, observable.registerCalledCount)
 
         assertEquals(
-            LoadUiState.Error(message = "no internet"),
+            LoadUiState.ErrorRes(),
             newInstanceFragment.statesList.first()
         )
         assertEquals(1, newInstanceFragment.statesList.size)
 
-        repository.expectResult(LoadResult.Success)
+        repository.expectResult(true)
         viewModel.load()
 
         assertEquals(LoadUiState.Progress, observable.postUiStateCalledList[2])
@@ -129,14 +129,16 @@ private class FakeFragment : (LoadUiState) -> Unit {
 private class FakeLoadRepository : LoadRepository {
 
     var loadCalledCount = 0
-    private var loadResult: LoadResult = LoadResult.Success
+    private var success = true
 
-    fun expectResult(loadResult: LoadResult) {
-        this.loadResult = loadResult
+    fun expectResult(success: Boolean) {
+        this.success = success
     }
 
     override suspend fun load() {
         loadCalledCount++
+        if (!success)
+            throw NoInternetConnectionException()
     }
 }
 
